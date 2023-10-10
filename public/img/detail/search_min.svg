@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="138" height="138" viewBox="0 0 138 138">
+  <defs>
+    <filter id="椭圆_22" x="0" y="0" width="138" height="138" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="search_min" data-name="search  min" transform="translate(-607 -1154.123)">
+    <g transform="matrix(1, 0, 0, 1, 607, 1154.12)" filter="url(#椭圆_22)">
+      <circle id="椭圆_22-2" data-name="椭圆 22" cx="60" cy="60" r="60" transform="translate(9 6)" fill="#00253e"/>
+    </g>
+    <g id="search_svg" data-name="search svg" transform="translate(643 1188.128)">
+      <rect id="矩形_110" data-name="矩形 110" width="62" height="62" transform="translate(2 0.995)" fill="none"/>
+      <g id="组_345" data-name="组 345" transform="translate(2 0.995)">
+        <path id="路径_24" data-name="路径 24" d="M0,0H61.87V61.87H0Z" fill="none"/>
+        <path id="路径_25" data-name="路径 25" d="M43.327,39.681,54.368,50.72,50.72,54.368,39.681,43.327a23.206,23.206,0,1,1,3.645-3.645Zm-5.171-1.913a18.039,18.039,0,1,0-.387.387l.387-.387Z" transform="translate(3.156 3.156)" fill="#fff"/>
+        <path id="路径_344" data-name="路径 344" d="M9.11,12.929H5.42V4.774H-2.6V1.13H5.42V-6.888H9.11V1.13h8.018V4.774H9.11Z" transform="translate(21.464 25.036)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

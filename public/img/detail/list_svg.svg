@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="list_icon_svg" data-name="list icon svg" transform="translate(-411.078 -209.533)">
+    <rect id="矩形_109" data-name="矩形 109" width="16" height="16" transform="translate(411.078 209.533)" fill="none"/>
+    <g id="组_344" data-name="组 344" transform="translate(1 2.122)">
+      <path id="路径_351" data-name="路径 351" d="M425.947,211.488h-9.335a.539.539,0,0,1,0-1.077h9.335a.539.539,0,1,1,0,1.077Z" transform="translate(-1.408)" fill="#fff"/>
+      <path id="路径_352" data-name="路径 352" d="M425.947,217.488h-9.335a.539.539,0,0,1,0-1.077h9.335a.539.539,0,1,1,0,1.077Z" transform="translate(-1.408 -1.691)" fill="#fff"/>
+      <path id="路径_353" data-name="路径 353" d="M425.947,223.488h-9.335a.539.539,0,0,1,0-1.077h9.335a.539.539,0,0,1,0,1.077Z" transform="translate(-1.408 -3.382)" fill="#fff"/>
+      <path id="路径_354" data-name="路径 354" d="M411.62,211.488a.541.541,0,0,1-.542-.539.536.536,0,0,1,.535-.539h.007a.539.539,0,1,1,0,1.077Z" transform="translate(0)" fill="#fff"/>
+      <path id="路径_355" data-name="路径 355" d="M411.62,217.488a.541.541,0,0,1-.542-.539.536.536,0,0,1,.535-.539h.007a.539.539,0,1,1,0,1.077Z" transform="translate(0 -1.691)" fill="#fff"/>
+      <path id="路径_356" data-name="路径 356" d="M411.62,223.488a.541.541,0,0,1-.542-.539.536.536,0,0,1,.535-.539h.007a.539.539,0,0,1,0,1.077Z" transform="translate(0 -3.382)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

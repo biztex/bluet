@@ -1,0 +1,28 @@
+#cboxContent {
+    background-color: #596F7C;
+}
+#cboxClose {
+    position:absolute;
+    bottom:0;
+    right:0;
+    background:url('../img/map_close.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    width:25px;
+    height:25px;
+    text-indent:-9999px;
+    top:5px;
+    border: none;
+    color: #fff
+}
+
+#cboxLoadedContent {
+    top: 20px;
+    position: relative;
+    margin: 3px:
+}
+#map-title {
+    color: #FFF;
+    margin-left: 20px;
+}
+

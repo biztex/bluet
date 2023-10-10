@@ -1,0 +1,13 @@
+@charset "utf-8";
+/*
+Theme Name: イリーズ
+Description: イリーズ　テンプレート
+Author: 
+
+*/
+
+
+@import "css/reset.css";
+@import "css/layout.css";
+@import "css/common.css";
+@import "css/page.css";

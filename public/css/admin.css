@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/***********
+ * cl 
+ **********/
+
+span.select-items {
+  color: #0069d9;
+  cursor: pointer;
+} 
+
+span.select-items:hover {
+  opacity: 0.7;
+} 
+
+.number-input {
+  text-align: right;
+  width: 50px;
+}
+
+// validation error
+label.error {
+  color: red;
+  background-color: #acf;
+}

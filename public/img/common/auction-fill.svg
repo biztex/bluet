@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="auction-fill" transform="translate(6 6)">
+    <circle id="椭圆_23" data-name="椭圆 23" cx="12" cy="12" r="12" transform="translate(-6 -6)" fill="#c3ab68"/>
+    <path id="路径_377" data-name="路径 377" d="M9.5,12.757v1.25H2v-1.25ZM9.866.686l4.861,4.861-.884.885-.663-.221L11.633,7.757l3.536,3.536-.884.884L10.75,8.641l-1.5,1.5.177.708-.884.884L3.679,6.873l.884-.884.706.176L9.2,2.233,8.983,1.57Z" transform="translate(-2.25 -1.757)" fill="#fff"/>
+  </g>
+</svg>

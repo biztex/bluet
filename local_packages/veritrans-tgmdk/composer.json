@@ -1,0 +1,28 @@
+{
+  "name": "veritrans/tgmdk",
+  "description": "VeriTrans MDK Package",
+  "version": "1.1.7",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "VeriTrans",
+      "email": "noreply@veritrans.jp"
+    }
+  ],
+  "require": {
+    "php": "~7.4|~8.0",
+    "psr/log": "^1.1.4",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*"
+  },
+  "config": {
+    "platform": {
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "tgMdk\\": "src/tgMdk/"
+    }
+  }
+}

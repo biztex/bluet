@@ -1,0 +1,254 @@
+﻿@charset "UTF-8";
+/*
+ * common.css
+ *
+ *  version --- 1.0
+ *  updated --- 2017/11/30
+ */
+
+
+/* !Base Fonts -------------------------------------------------------------- */
+a {
+	color: #333;
+	text-decoration: none;
+	transition: all 0.5s !important;
+	-moz-transition: all 0.5s !important; /* Firefox */
+	-webkit-transition: all 0.5s !important; /* Chrome&Safari */
+}
+
+a:hover {
+	text-decoration: none;
+	transition: all 0.5s !important;
+	-moz-transition: all 0.5s !important; /* Firefox */
+	-webkit-transition: all 0.5s !important; /* Chrome&Safari */
+	opacity: .7;
+	-webkit-opacity: .7;
+	-moz-opacity: .7;
+	filter: alpha(opacity=70);	/* IE lt 8 */
+	-ms-filter: "alpha(opacity=70)"; /* IE 8 */
+	-webkit-transition: opacity 0.5s ease-out;
+	-moz-transition: opacity 0.5s ease-out;
+	-ms-transition: opacity 0.5s ease-out;
+	transition: opacity 0.5s ease-out;
+}
+
+.op img,
+.op input {
+	-webkit-transition: opacity 0.5s ease-out;
+	-moz-transition: opacity 0.5s ease-out;
+	-ms-transition: opacity 0.5s ease-out;
+	transition: opacity 0.5s ease-out;	
+}
+.op:hover img,
+.op:hover input {
+	opacity: .7;
+	-webkit-opacity: .7;
+	-moz-opacity: .7;
+	filter: alpha(opacity=70);	/* IE lt 8 */
+	-ms-filter: "alpha(opacity=70)"; /* IE 8 */
+	-webkit-transition: opacity 0.5s ease-out;
+	-moz-transition: opacity 0.5s ease-out;
+	-ms-transition: opacity 0.5s ease-out;
+	transition: opacity 0.5s ease-out;
+}
+.fwN { font-weight: normal;}
+.fwB { font-weight: bold;}
+.fs10   { font-size: 1.0rem;}
+.fs11   { font-size: 1.1rem;}
+.fs12   { font-size: 1.2rem;}
+.fs13   { font-size: 1.3rem;}
+.fs14   { font-size: 1.4rem;}
+.fs15   { font-size: 1.5rem;}
+.fs16   { font-size: 1.6rem;}
+.fs17   { font-size: 1.7rem;}
+.fs18   { font-size: 1.8rem;}
+.fs19   { font-size: 1.9rem;}
+.fs20   { font-size: 2.0rem;}
+.fs21   { font-size: 2.1rem;}
+.fs22   { font-size: 2.2rem;}
+.fs23   { font-size: 2.3rem;}
+.fs24   { font-size: 2.4rem;}
+.fs25   { font-size: 2.5rem;}
+sup   { font-size: 8px; vertical-align: top;}
+sub   { font-size: 8px; vertical-align: baseline;}
+
+/* !Inline Align ------------------------------------------------------------ */
+.taL { text-align: left   !important;}
+.taC { text-align: center !important;}
+.taR { text-align: right  !important;}
+.vaT { vertical-align: top    !important;}
+.vaM { vertical-align: middle !important;}
+.vaB { vertical-align: bottom !important;}
+.blockC { margin-right: auto; margin-left: auto; text-align: left;}
+* html .blockC { margin-right: 0; margin-left: 0;}
+.blockR { margin-left: auto; text-align: left;}
+* html .blockR { margin-left: 0;}
+
+/* !Width ------------------------------------------------------------------- */
+
+.w03per { width: 3%  !important;}
+.w05per { width: 5%  !important;}
+.w10per { width: 10% !important;}
+.w13per { width: 13% !important;}
+.w15per { width: 15% !important;}
+.w20per { width: 20% !important;}
+.wQuart { width: 25% !important;}
+.w30per { width: 30% !important;}
+.wTri   { width: 33.33% !important;}
+.w35per { width: 35% !important;}
+.w40per { width: 40% !important;}
+.w45per { width: 45% !important;}
+.wHalf  { width: 50% !important;}
+.wMax   { width: 100% !important;}
+
+/* !Floats ------------------------------------------------------------------ */
+.flL    { display: inline; float: left;}
+.flR    { display: inline; float: right;}
+.flImgL { display: inline; float: left; margin-right: 10px;}
+.flImgR { display: inline; float: right; margin-left: 10px;}
+.ftBox  { overflow: hidden;}
+
+/* !Tools ------------------------------------------------------------------- */
+.clear { clear: both;}
+.block { display: block !important;}
+.hide  { display: none !important;}
+.bgN   { background: none !important;}
+.tdU   { text-decoration: underline;}
+.tdN   { text-decoration: none;}
+.telphone{
+	pointer-events: none;
+}
+/* !JavaScript -------------------------------------------------------------- */
+.over { /* ロールオーバー呼び出し用 */ }
+
+.pc {
+	display: block;
+}
+.sp {
+	display: none;
+}
+.ts{
+	display: none;
+}
+.st{
+	display: block;
+}
+@media screen and (max-width: 959px) {	
+.ts{
+	display: block;
+}
+.st{
+	display: none;
+}
+}
+@media screen and (max-width: 768px) {
+.pc {
+	display: none;
+}
+.sp {
+	display: block;
+}
+.telphone{
+	pointer-events: initial;
+}
+a:hover {
+	opacity: 1;
+	-webkit-opacity: 1;
+	-moz-opacity: 1;
+	filter: alpha(opacity=100);	/* IE lt 8 */
+	-ms-filter: "alpha(opacity=100)"; /* IE 8 */
+}
+}
+
+/* !h(n)eading
+---------------------------------------------------------- */
+.hdL {
+	text-align: center;
+	color: #00253E;
+	font-size: 1.4rem;
+	font-weight: 500;
+}
+.hdL span{
+	display: block;
+	font-weight: 500;
+	font-size: 3.2rem;
+	letter-spacing: 0.1em;
+	margin-bottom: 5px;
+}
+.hdM {
+	
+}
+
+.hdS {
+	
+}
+
+.hd01 {
+	
+}
+
+
+/*** タブレット 768x ~ 959px***/
+@media screen and (max-width: 959px) {
+
+}
+
+/*** スマホ 320px ~ 767px***/
+@media screen and (max-width: 768px) {
+.hdL {
+	font-size: 1.2rem;
+}
+.hdL span{
+	font-size: 2.4rem;
+	margin-bottom: 3px;
+}
+}
+
+
+/* !list
+---------------------------------------------------------- */
+.list01 {
+	
+}
+
+/*** タブレット 768x ~ 959px***/
+@media screen and (max-width: 959px) {
+
+}
+
+/*** スマホ 320px ~ 767px***/
+@media screen and (max-width: 768px) {
+
+}
+
+
+/* !table
+---------------------------------------------------------- */
+.table01 {
+	
+}
+
+/*** タブレット 768x ~ 959px***/
+@media screen and (max-width: 959px) {
+
+}
+
+/*** スマホ 320px ~ 767px***/
+@media screen and (max-width: 768px) {
+
+}
+
+/* !common structure
+---------------------------------------------------------- */
+
+
+/*** タブレット 768x ~ 959px***/
+@media screen and (max-width: 959px) {
+
+}
+
+/*** スマホ 320px ~ 767px***/
+@media screen and (max-width: 768px) {
+
+}
+

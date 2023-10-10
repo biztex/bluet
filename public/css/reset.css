@@ -1,0 +1,122 @@
+@charset "UTF-8";
+/*
+ * reset.css
+ *
+ *  version --- 1.0
+ *  updated --- 2017/11/30
+ */
+
+
+/* !HTML5 elements
+---------------------------------------------------------- */
+header, footer, nav, section, aside, article
+{ display: block;}
+
+/* !Reseting
+---------------------------------------------------------- */
+
+body, div, pre, p, blockquote, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, th, td
+{ margin: 0; padding: 0;}
+input, textarea
+{ margin: 0; font-size: 100%;}
+label
+{ cursor: pointer;}
+table
+{ border-collapse: collapse; border-spacing: 0; font-size: 100%;}
+fieldset, img
+{ border: 0;}
+img
+{ vertical-align: top; max-width: 100%;}
+address, caption, cite, code, dfn, em, th, var
+{ font-style: normal; font-weight: normal;}
+ol, ul
+{ list-style: none;}
+caption, th
+{ text-align: left;}
+h1, h2, h3, h4, h5, h6
+{ font-size: 100%; font-weight: normal;}
+q:after, q:before
+{ content:'';}
+a, input,select,textarea,button
+{ outline: none; }
+abbr, acronym
+{ border: 0;}
+
+
+
+/* !Clearfix
+---------------------------------------------------------- */
+.clearfix {
+	display: block;
+	min-height: 1%;
+}
+.clearfix:after {
+	clear: both;
+	content:".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+* html .clearfix {
+	height: 1%;
+	/*\*//*/
+	height: auto;
+	overflow: hidden;
+	/**/
+}
+/* !form
+---------------------------------------------------------- */
+select::-ms-expand {
+	display: none;
+}
+
+input[type=radio]::-ms-check,
+input[type=checkbox]::-ms-check{
+	display: none;
+}
+
+select,
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=tel],
+input[type=number],
+input[type=reset],
+input[type=button],
+input[type=submit],
+textarea {
+  -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-border-radius: 0;
+  -moz-border-radius: 0;
+	border-radius: 0;
+}
+input[type=text]::-ms-clear,
+input[type=tel]::-ms-clear,
+input[type=number]::-ms-clear{
+	display: none;
+}
+input[type=reset],
+input[type=button],
+input[type=submit],
+textarea {
+  font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "MS Pゴシック", "MS PGothic", sans-serif;
+}
+/* !Layout
+---------------------------------------------------------- */
+html { 
+	overflow-y: scroll;
+	font-size: 62.5%;
+}
+body {
+	font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "MS Pゴシック", "MS PGothic", sans-serif;
+	font-size: 1.6rem;
+	-webkit-text-size-adjust: none;
+	line-height: 1.5;
+	color: #333;
+}
+
+.RedHat{
+	font-family: 'Red Hat Display', sans-serif;
+}

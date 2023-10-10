@@ -1,0 +1,151 @@
+{{ $name_last }} {{ $name_first }}　様
+
+この度はブルーツーリズム北海道からのリクエスト予約、誠にありがとうございました。
+
+ご予約について、ご希望の決済方法をお選びいただき
+決済手続きを行なっていただけますようお願いいたします。
+
+【決済方法】
+=====================================
+以下の中からお支払い方法をお選びください
+● 現地払い　：　現地でスタッフがご案内します
+
+● 事前払い　：　後段の振込先口座へお振込をお願いいたします
+
+● クレジットカード決済URL　　：{{ $url_card }}
+
+● コンビニエンスストア決済URL：{{ $url_cvs }}
+=====================================
+
+振込先口座
+----------------------------------------------------
+金融機関名：　{{ $bank->name }} （金融機関コード：{{ $bank->code }}）
+支店名　　：　{{ $bank->branch_name }}　(支店コード：{{ $bank->branch_code }})
+口座種別　：　@if ($bank->type == 0){{'普通'}}@else{{'当座'}}@endif　
+口座番号　：　{{ $bank->account_number }}
+口座名義　：　{{ $bank->account_name }}
+----------------------------------------------------
+
+【予約情報】
+=====================================
+予約番号　：　{{ $number }}
+予約状況　：　決済待ち
+プラン名　：　{{ $plan }}　　
+お名前　　：　{{ $name_last }} {{ $name_first }}　様
+予約日　　：　{{ $date }}
+予約時間　：　{{ $activity }}
+電話番号　：　{{ $tel }}
+メール　　：　{{ $email }}
+予約人数
+----------------------------------------------------
+@foreach ($reservation->plan->prices as $price)
+@if ($price->type == 0)
+@if ($price->week_flag == 0)
+・2名様参加の場合お一人様　/　{{ number_format($price->price) }}円 × {{ $reservation->type0_number }} = {{ number_format($price->price * $reservation->type0_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・2名様参加の場合お一人様　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type0_number }} = {{ number_format($price->{$weekday} * $reservation->type0_number) }}円
+@endif
+@elseif ($price->type == 1)
+@if ($price->week_flag == 0)
+・3名様参加の場合お一人様　/　{{ number_format($price->price) }}円 × {{ $reservation->type1_number }} = {{ number_format($price->price * $reservation->type1_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・3名様参加の場合お一人様　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type1_number }} = {{ number_format($price->{$weekday} * $reservation->type1_number) }}円
+@endif
+@elseif ($price->type == 2)
+@if ($price->week_flag == 0)
+・大人お一人様　/　{{ number_format($price->price) }}円 × {{ $reservation->type2_number }} = {{ number_format($price->price * $reservation->type2_number) }}
+@endif
+@if ($price->week_flag == 1)
+・大人お一人様　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type2_number }} = {{ number_format($price->{$weekday} * $reservation->type2_number) }}
+@endif
+@elseif ($price->type == 3)
+@if ($price->week_flag == 0)
+・小人お一人様（7～11歳）　/　{{ number_format($price->price) }}円 × {{ $reservation->type3_number }} = {{ number_format($price->price * $reservation->type3_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・小人お一人様（7～11歳）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type3_number }} = {{ number_format($price->{$weekday} * $reservation->type3_number) }}円
+@endif
+@elseif ($price->type == 4)
+@if ($price->week_flag == 0)
+・小人お一人様（4～6歳）　/　{{ number_format($price->price) }}円 × {{ $reservation->type4_number }} = {{ number_format($price->price * $reservation->type4_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・小人お一人様（4～6歳）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type4_number }} = {{ number_format($price->{$weekday} * $reservation->type4_number) }}円
+@endif
+@elseif ($price->type == 5)
+@if ($price->week_flag == 0)
+・幼児（3歳）　/　{{ number_format($price->price) }}円 × {{ $reservation->type5_number }} = {{ number_format($price->price * $reservation->type5_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・幼児（3歳）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type5_number }} = {{ number_format($price->{$weekday} * $reservation->type5_number) }}円
+@endif
+@elseif ($price->type == 6)
+@if ($price->week_flag == 0)
+・大人（3～4名1室）　/　{{ number_format($price->price) }}円 × {{ $reservation->type6_number }} = {{ number_format($price->price * $reservation->type6_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・大人（3～4名1室）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type6_number }} = {{ number_format($price->{$weekday} * $reservation->type6_number) }}円
+@endif
+@elseif ($price->type == 7)
+@if ($price->week_flag == 0)
+・小学生（3～4名1室）　/　{{ number_format($price->price) }}円 × {{ $reservation->type7_number }} = {{ number_format($price->price * $reservation->type7_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・小学生（3～4名1室）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type7_number }} = {{ number_format($price->{$weekday} * $reservation->type7_number) }}円
+@endif
+@elseif ($price->type == 8)
+@if ($price->week_flag == 0)
+・大人（2名1室）　/　{{ number_format($price->price) }}円 × {{ $reservation->type8_number }} = {{ number_format($price->price * $reservation->type8_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・大人（2名1室）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type8_number }} = {{ number_format($price->{$weekday} * $reservation->type8_number) }}円
+@endif
+@elseif ($price->type == 9)
+@if ($price->week_flag == 0)
+・小学生（2名1室）　/　{{ number_format($price->price) }}円 × {{ $reservation->type9_number }} = {{ number_format($price->price * $reservation->type9_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・小学生（2名1室）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type9_number }} = {{ number_format($price->{$weekday} * $reservation->type9_number) }}円
+@endif
+@elseif ($price->type == 10)
+@if ($price->week_flag == 0)
+・未就学幼児（3歳以上）　/　{{ number_format($price->price) }}円 × {{ $reservation->type10_number }} = {{ number_format($price->price * $reservation->type10_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・未就学幼児（3歳以上）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type10_number }} = {{ number_format($price->{$weekday} * $reservation->type10_number) }}円
+@endif
+@elseif ($price->type == 11)
+@if ($price->week_flag == 0)
+・大人（中学生以上）　/　{{ number_format($price->price) }}円 × {{ $reservation->type11_number }} = {{ number_format($price->price * $reservation->type11_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・大人（中学生以上）　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type11_number }} = {{ number_format($price->{$weekday} * $reservation->type11_number) }}円
+@endif
+@elseif ($price->type == 12)
+@if ($price->week_flag == 0)
+・小学生　/　{{ number_format($price->price) }}円 × {{ $reservation->type12_number }} = {{ number_format($price->price * $reservation->type12_number) }}円
+@endif
+@if ($price->week_flag == 1)
+・小学生　/　{{ number_format($price->{$weekday}) }}円 × {{ $reservation->type12_number }} = {{ number_format($price->{$weekday} * $reservation->type12_number) }}円
+@endif
+@endif
+@endforeach
+
+決済金額合計：{{ number_format($amount) }}円
+----------------------------------------------------
+=====================================
+
+
+=====================================
+株式会社ブルーツーリズム北海道
+
+お問い合わせ先
+メール　　：　blue@quality-t.com
+電話番号　：　011-252-2333
+公式サイト: 　https://blue-tourism-hokkaido.com/jp
+メール　　:　 info@blue-tourism-hokkaido.com
+=====================================
+
+
