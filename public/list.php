@@ -18,6 +18,7 @@
     <div class="header"><a href="list.php"><img src ="https://blue-tourism-hokkaido.website/img/logo.png"></a></div>
     <div class="flex-container-plans">
     <?php
+    require_once('./common.php');
     // アクティビティプラン(0)
     $url = "http://blue-tourism-hokkaido.website/api/plans/json/0";
     $json = file_get_contents($url);

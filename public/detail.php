@@ -45,6 +45,7 @@ $stocks_next = json_decode($json_stocks_next,true);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+<link rel="stylesheet" type="text/css" href="../public/css/template.css">
 		<style type="text/css">
 img.wp-smiley,
 img.emoji {
@@ -184,6 +185,15 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 </head>
 
 <body>
+<div id="glang">
+	<div id="google_translate_element"></div>
+	<script type="text/javascript">
+	function googleTranslateElementInit() {
+	  new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+	}
+	</script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
 <div class="header"><a href="list.php"><img src ="https://blue-tourism-hokkaido.website/img/logo.png"></a></div>
 <div class="container-plan">
 	<div class="title">
@@ -502,7 +512,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                   <th>キャンセル締切</th><td>旅行および体験の1日前の17:00まで</td>
                 </tr>
                 <tr>
-                  <th>キャンセル規定</th><td>参加日の10日～8日前：　旅行代金および体験料金の20％<br />参加日の7日～2日前：　旅行代金および体験料金の30％<br />参加日の1日前：　旅行代金および体験料金の40％<br />参加日の当日：　旅行代金および体験料金の50％<br />参加日の無連絡キャンセル：　旅行代金および体験料金の100％ </td>
+                  <th>キャンセル規定</th><td><!--参加日の10日～8日前：　旅行代金および体験料金の20％<br />-->参加日の7日～2日前：　旅行代金および体験料金の30％<br />参加日の1日前：　旅行代金および体験料金の40％<br />参加日の当日：　旅行代金および体験料金の50％<br />参加日の無連絡キャンセル：　旅行代金および体験料金の100％ </td>
                 </tr>
             </table>
         </div>
@@ -589,22 +599,14 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 
     <footer class="footer_wrap">
         <a href="company.php">会社概要</a>
-        <a href="tradelaw.php">特定商取引法に基づく表記</a>
+        <!-- <a href="tradelaw.php">特定商取引法に基づく表記</a> -->
         <a href="privacy.php">プライバシーポリシー</a>
     </footer>
     <div class="copy">Copyright © BlueTourismHokkaido All rights reserved</div>
 </div>
 
 <style type="text/css">
-.header {
-    margin: 0 61px;
-    padding: 8px 0 10px 0;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
-}
-.header img {
-    width: 200px;
-}
+
 .price {
 	text-align: center;
 }
@@ -873,10 +875,6 @@ input[name="tab_item"] {
 }
 
 @media screen and (max-width: 767px) {
-    .header {
-        text-align: center;
-        margin: 0px;
-    }
     .container-plan {
         width: 100%;
     }
@@ -910,32 +908,10 @@ input[name="tab_item"] {
     }
 }
 
-/*footer2022-02-16*/
-.footer_wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 60px;
-}
-.footer_wrap a {
-    margin-right:30px;
-}
-.footer_wrap a:nth-last-child(1) {
-    margin-right:0px;
-}
-.copy {
-    text-align:center;
-    margin-top:15px;
-}
-@media screen and (max-width: 767px) {
-    .footer_wrap {
-    flex-direction:column;
-}
-}
 </style>
 
 </body>
-<script src='https://maps.google.com/maps/api/js?key=AIzaSyB7CkBjPmwOkMOo-pcyGN1APV7kNEl24nM' type="text/javascript"></script>
+<script src='https://maps.google.com/maps/api/js?key=AIzaSyCG9SfPt8adGSdlgWkq8jdbt64mYaPRkaM' type="text/javascript"></script>
 <script>
 // マップ1設定
 if (document.getElementById('lat') && document.getElementById('lng')) {

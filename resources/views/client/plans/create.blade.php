@@ -2123,7 +2123,7 @@ $('#post-button').on('click',function(){
 })
 
 </script>
-<script src='https://maps.google.com/maps/api/js?key=AIzaSyB7CkBjPmwOkMOo-pcyGN1APV7kNEl24nM' type="text/javascript"></script>
+<script src='https://maps.google.com/maps/api/js?key=AIzaSyCG9SfPt8adGSdlgWkq8jdbt64mYaPRkaM' type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.colorbox-min.js')}}"></script>
 <script src="{{ asset('/js/map.js')}}"></script>
 <script src="{{ asset('/js/map2.js')}}"></script>

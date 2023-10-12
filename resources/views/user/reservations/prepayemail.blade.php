@@ -31,6 +31,7 @@
 予約人数
 ----------------------------------------------------
 @php
+if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00'))){
   foreach($reservation->plan->prices as $i => $price) {
       if ($price->week_flag == 0) {
         echo $price->price_types->name . " / " . number_format($price->price) . " 円 × " . $reservation->{'type'.$price->price_types->number.'_number'} . ' = ' . number_format($price->price * $reservation->{'type'.$price->price_types->number.'_number'}) . ' 円' . "\n";
@@ -39,6 +40,19 @@
         echo $price->price_types->name . " / " . number_format($price->{$weekday}) . " 円 × " . $reservation->{'type'.$price->price_types->number.'_number'} . ' = ' . number_format($price->{$weekday} * $reservation->{'type'.$price->price_types->number.'_number'}) . ' 円' . "\n";
       }
   }
+}else{
+  $Number_of_reservations = json_decode($reservation->Number_of_reservations);
+  foreach($reservation->plan->prices as $i => $price) {
+    if(array_key_exists(sprintf('type%d_number', $price->price_types->number), $Number_of_reservations)){
+      if ($price->week_flag == 0) {
+        echo $price->price_types->name . " / " . number_format($price->price) . " 円 × " . $Number_of_reservations->{'type'.$price->price_types->number.'_number'} . ' = ' . number_format($price->price * $Number_of_reservations->{'type'.$price->price_types->number.'_number'}) . ' 円' . "\n";
+      }
+      if ($price->week_flag == 1) {
+        echo $price->price_types->name . " / " . number_format($price->{$weekday}) . " 円 × " . $Number_of_reservations->{'type'.$price->price_types->number.'_number'} . ' = ' . number_format($price->{$weekday} * $Number_of_reservations->{'type'.$price->price_types->number.'_number'}) . ' 円' . "\n";
+      }
+    }
+  }
+}
 @endphp
 
 決済金額合計：{{ number_format($amount) }}円

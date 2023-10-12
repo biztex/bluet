@@ -1,0 +1,246 @@
+<?php  // resources/lang/ja/validation.php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Validation Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines contain the default error messages used by
+    | the validator class. Some of these rules have multiple versions such
+    | as the size rules. Feel free to tweak each of these messages here.
+    |
+    */
+
+    'accepted'             => ':attributeを承認してください',
+    'active_url'           => ':attributeは正しいURLではありません',
+    'after'                => ':attributeは、:date以降の日付にしてください',
+    'after_or_equal'       => ':attributeは、:date以降の日付にしてください',
+    'alpha'                => ':attributeは英字のみにしてください',
+    'alpha_dash'           => ':attributeは英数字とハイフンのみにしてください',
+    'alpha_num'            => ':attributeは英数字のみにしてください',
+    'array'                => ':attributeは配列にしてください',
+    'before'               => ':attributeは:date以前の日付にしてください',
+    'between'              => [
+        'numeric' => ':attributeは:min〜:maxまでにしてください',
+        'file'    => ':attributeは:min〜:max KBまでのファイルにしてください',
+        'string'  => ':attributeは:min〜:max文字にしてください',
+        'array'   => ':attributeは:min〜:max個までにしてください',
+    ],
+    'boolean'              => ':attributeはtrueかfalseにしてください',
+    'confirmed'            => ':attributeが確認用項目と一致していません',
+    'date'                 => ':attributeは正しい日付ではありません',
+    'date_format'          => ':attributeは":format"書式と一致していません',
+    'different'            => ':attributeは:otherと違うものにしてください',
+    'digits'               => ':attributeは:digits桁にしてください',
+    'digits_between'       => ':attributeは:min〜:max桁にしてください',
+    'dimensions'           => '画像サイズが規定外です',
+    'email'                => ':attributeを正しいメールアドレス形式にしてください',
+    'filled'               => ':attributeは必須です',
+    'exists'               => '選択された:attributeは正しくありません',
+    'image'                => ':attributeは画像にしてください',
+    'in'                   => '選択された:attributeは正しくありません',
+    'integer'              => ':attributeは整数にしてください',
+    'ip'                   => ':attributeを正しいIPアドレスにしてください',
+    'max'                  => [
+        'numeric' => ':attributeは:max以下にしてください',
+        'file'    => ':attributeは:max KB以下のファイルにしてください',
+        'string'  => ':attributeは:max文字以下にしてください',
+        'array'   => ':attributeは:max個以下にしてください',
+    ],
+    'mimes'                => ':attributeは:valuesタイプのファイルにしてください',
+    'min'                  => [
+        'numeric' => ':attributeは:min以上にしてください',
+        'file'    => ':attributeは:min KB以上のファイルにしてください',
+        'string'  => ':attributeは:min文字以上にしてください',
+        'array'   => ':attributeは:min個以上にしてください',
+    ],
+    'not_in'               => '選択された:attributeは正しくありません',
+    'numeric'              => ':attributeは数字にしてください',
+    'regex'                => ':attributeの書式が正しくありません',
+    'required'             => ':attributeは必須です',
+    'required_if'          => ':otherが:valueの時、:attributeは必須です',
+    'required_with'        => ':valuesが存在する時、:attributeは必須です',
+    'required_with_all'    => ':valuesが存在する時、:attributeは必須です',
+    'required_without'     => ':valuesがない場合、:attributeは必須です',
+    'required_without_all' => ':valuesが存在しない時、:attributeは必須です',
+    'same'                 => ':attributeと:otherは一致していません',
+    'size'                 => [
+        'numeric' => ':attributeは:sizeにしてください',
+        'file'    => ':attributeは:size KBにしてください',
+        'string'  => ':attributeは:size文字にしてください',
+        'array'   => ':attributeは:size個にしてください',
+    ],
+    'string'               => ':attributeは文字列にしてください',
+    'timezone'             => ':attributeは正しいタイムゾーンをしていしてください',
+    'unique'               => ':attributeは既に存在します',
+    'url'                  => ':attributeを正しい書式にしてください',
+    'uploaded'             => 'ファイルをアップロードできませんでした（ファイルの種類、サイズなどをご確認ください）',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify custom validation messages for attributes using the
+    | convention "attribute.rule" to name the lines. This makes it quick to
+    | specify a specific custom language line for a given attribute rule.
+    |
+    */
+
+    'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Attributes
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used to swap attribute place-holders
+    | with something more reader friendly such as E-Mail Address instead
+    | of "email". This simply helps us make messages a little cleaner.
+    |
+    */
+
+    'attributes' => [
+        'name' => '名前項目',
+        'group_id' => '所属グループ',
+        'role' => '権限',
+        'tel' => '電話番号',
+        'staff_name' => '担当者',
+        'email' => 'メールアドレス',
+        'password' => 'パスワード', 
+        'password_confirmation' => 'パスワード確認', 
+        'title' => 'タイトル', 
+        'content' => '本文', 
+        'postal_code' => '郵便番号', 
+        'publication_date' => '掲載日', 
+        'pubdate' => '公開日', 
+        'address' => '住所', 
+        'category' => 'カテゴリ', 
+        'price' => '価格', 
+        'prefecture_id' => '都道府県', 
+        'genre_id1' => 'ジャンル1', 
+        'is_listed' => 'ステータス', 
+        'file_path1' => 'メイン画像', 
+        'file_path2' => '画像', 
+        'file_path3' => '画像', 
+        'file_path4' => '画像', 
+        'file_path5' => '画像', 
+        'file_path6' => '画像', 
+        'file_path7' => '画像', 
+        'file_path8' => '画像', 
+        'file_path9' => '画像', 
+        'file_path10' => '画像', 
+        'place_id' => '出店場所', 
+        'open_date' => '出店日（開催日）', 
+        'close_date' => '終了日', 
+        'open_time' => '開始時間', 
+        'close_time' => '終了時間', 
+        'keyword' => 'キーワード', 
+        'kana' => 'フリガナ', 
+        'company' => '会社名', 
+        'place' => '場所', 
+        'numcar' => '台数', 
+        'numperson' => '人数', 
+        'time' => '時間', 
+        'start' => '日にち', 
+        'etc' => '備考', 
+        'coupon' => 'クーポン選択', 
+        'status' => '予約ステータス', 
+        'publisher_id' => 'パブリッシャー', 
+        'title' => 'タイトル', 
+        'description' => 'プラン説明文', 
+        'creator' => '作成者', 
+        'link' => 'URL', 
+        'catchphrase' => 'キャッチコピー', 
+        'start_day' => '開催期間（開始日）', 
+        'end_day' => '開催期間（終了日）', 
+        'repetition_flag' => '繰り返し設定', 
+        'res_accept_date' => '受付開始日', 
+        'res_accept_time' => '受付開始時間', 
+        'res_end_date' => '受付終了日', 
+        'res_end_time' => '受付終了時間', 
+        'reqres_end_date' => 'リクエスト予約 受付終了日', 
+        'reqres_end_time' => 'リクエスト予約 受付終了時間', 
+        'place_name' => '体験場所名', 
+        'place_latitude' => '体験場所 緯度', 
+        'place_longitude' => '体験場所 経度', 
+        'meeting_point_name' => '集合場所名', 
+        'meeting_point_latitude' => '集合場所 緯度', 
+        'meeting_point_longitude' => '集合場所 経度', 
+        'old_file_path1' => '既存メイン画像',
+        'time_hour' => '所要時間 時間',
+        'time_minute' => '所要時間 分',
+        'genre_name' => 'ジャンル',
+        'res_before_day' => '受付開始日時 何日前',
+        'res_end_day' => '受付締切日時(即時予約) 何日前',
+        'req_before_day' => '受付締切日時(リクエスト予約) 何日前',
+        'activity_name1' => '体験時間(1) 【名称】',
+        'activity_name2' => '体験時間(2) 【名称】',
+        'activity_name3' => '体験時間(3) 【名称】',
+        'activity_name4' => '体験時間(4) 【名称】',
+        'price_price1' => '料金区分 (1) 【販売料金】',
+        'price_price2' => '料金区分 (2) 【販売料金】',
+        'price_price3' => '料金区分 (3) 【販売料金】',
+        'price_price4' => '料金区分 (4) 【販売料金】',
+        'price_price5' => '料金区分 (5) 【販売料金】',
+        'price_price6' => '料金区分 (6) 【販売料金】',
+        'cache_flag' => '現地現金払い',
+        'card_flag' => '現地カード払い',
+        'name_kana' => '氏名カナ',
+        'prefecture' => '都道府県',
+        'birth_year' => '年（生年月日）',
+        'birth_month' => '月（生年月日）',
+        'birth_day' => '日（生年月日）',
+        'type0_number' => '人数（2名様参加の場合お一人様）',
+        'type1_number' => '人数（3名様参加の場合お一人様）',
+        'type2_number' => '人数（大人お一人様）',
+        'type3_number' => '人数（小人お一人様（7～11歳））',
+        'type4_number' => '人数（小人お一人様（4～6歳））',
+        'type5_number' => '人数（幼児（3歳））',
+        'kind' => 'サイトカテゴリ',
+        'name_first' => '名',
+        'name_last' => '性',
+        'kana_first' => 'メイ',
+        'kana_last' => 'セイ',
+        'postalcode' => '郵便番号',
+        'tel2' => '遊び・体験当日緊急連絡先',
+        'answer' => '質問事項の回答',
+        'included_item' => '料金に含まれるもの',
+        'payment_comment' => '支払方法の補足・詳細',
+        'res_limit_number' => '即時予約受付制限（数値）',
+        'min_number' => '1予約あたり最小人数',
+        'max_number' => '1予約あたり最大人数',
+        'caution_content' => '注意事項・その他',
+        'account_number' => '口座番号',
+        'type0_number' => '予約人数',
+        'type1_number' => '予約人数',
+        'type2_number' => '予約人数',
+        'type3_number' => '予約人数',
+        'type4_number' => '予約人数',
+        'type5_number' => '予約人数',
+        'type6_number' => '予約人数',
+        'type7_number' => '予約人数',
+        'type8_number' => '予約人数',
+        'type9_number' => '予約人数',
+        'type10_number' => '予約人数',
+        'type11_number' => '予約人数',
+        'type12_number' => '予約人数',
+        'type13_number' => '予約人数',
+        'type14_number' => '予約人数',
+        'type15_number' => '予約人数',
+        'type16_number' => '予約人数',
+        'type17_number' => '予約人数',
+        'type18_number' => '予約人数',
+        'type19_number' => '予約人数',
+        'type20_number' => '予約人数',
+        '' => '',
+    ],
+
+];
+

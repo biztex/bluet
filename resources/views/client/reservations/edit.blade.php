@@ -68,6 +68,7 @@
                                   <option value="リクエスト予約" @if(old('status',$reservations->status)=='リクエスト予約') selected  @endif>リクエスト予約</option>
                                   <option value="未決済" @if(old('status',$reservations->status)=='未決済') selected  @endif>未決済</option>
                                   <option value="キャンセル" @if(old('status',$reservations->status)=='キャンセル') selected  @endif>キャンセル</option>
+                                  <option value="一部返金" @if(old('status',$reservations->status)=='一部返金') selected  @endif>一部返金</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -148,6 +149,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                  <?php $Sumpt = 0; $Number_req = [];?>
                     @foreach ($reservations->plan->prices as $price)
                     <tr>
 <td>
@@ -161,6 +163,7 @@
 <td style="text-align: right;">{{ number_format($price->{$weekday}) }} 円</td>
 <input type="hidden" id="price{{$loop->index + 1}}" value="{{ $price->{$weekday} }}">
 @endif
+@if ($reservations->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00')))
 <td style="text-align: right; padding-left: 50px;"><div class="row"><input id="per-number{{ ($loop->index + 1) }}" class="number-input" name="type{{$price->type}}_number" value="@php $i = $price->type;echo $reservations->{'type' . $i . '_number'};@endphp"> <span style="line-height: 1.8;" class="col-md-1"> 名</span></div></td>
 <input type="hidden" class="col-md-6 text-right" value="@php $i = $price->type;echo $reservations->{'type' . $i . '_number'};@endphp">
 
@@ -170,11 +173,37 @@ $i = $price->type;
 $type_number = $reservations->{'type' . $i . '_number'};
 if ($price->week_flag == 0) {
     $result = ($type_number * $price->price);
+    $Sumpt += $type_number * $price->price;
 } else {
     $result = $type_number * $price->{$weekday};
+    $Sumpt += $type_number * $price->{$weekday};
 }
 echo $result . ' 円';
+$Number_req[$loop->index + 1] = $type_number;
 @endphp
+@else
+@php $Number_of_reservations = json_decode($reservations->Number_of_reservations);@endphp
+@if (!array_key_exists(sprintf('type%d_number', $price->type), $Number_of_reservations))
+@php $Number_of_reservations->{'type' . $price->type . '_number'} = 0;@endphp
+@endif
+<td style="text-align: right; padding-left: 50px;"><div class="row"><input id="per-number{{ ($loop->index + 1) }}" class="number-input" name="type{{$price->type}}_number" value="@php $i = $price->type;echo $Number_of_reservations->{'type' . $i . '_number'};@endphp"> <span style="line-height: 1.8;" class="col-md-1"> 名</span></div></td>
+<input type="hidden" class="col-md-6 text-right" value="@php $i = $price->type;echo $Number_of_reservations->{'type' . $i . '_number'};@endphp">
+
+<td id="per-text-price{{ ($loop->index + 1) }}" style="text-align: right;">
+@php
+$i = $price->type;
+$type_number = $Number_of_reservations->{'type' . $i . '_number'};
+if ($price->week_flag == 0) {
+    $result = ($type_number * $price->price);
+    $Sumpt += $type_number * $price->price;
+} else {
+    $result = $type_number * $price->{$weekday};
+    $Sumpt += $type_number * $price->{$weekday};
+}
+echo $result . ' 円';
+$Number_req[$loop->index + 1] = $type_number;
+@endphp
+@endif
 </td>
 <input type="hidden" id="per-price{{ ($loop->index + 1) }}" value="{{ $result }}">
                     </tr>
@@ -185,6 +214,47 @@ echo $result . ' 円';
                       <td id="total-number" style="text-align: center;" class="font-weight-bold"></td>
                       <td id="total-price" style="text-align: right;" class="font-weight-bold"></td>
                     </tr>
+                    <?php $Possible_refund_amount = $Sumpt - $Sum_refund_amount; ?>
+                      @if (count($Credit_Cancels) > 0)
+                        <?php $cancnt = 0; ?>
+                        @foreach ($Credit_Cancels as $Credit_Cancel)
+                            @if ($cancnt == 0)
+                            <tr>
+                                @if ($Possible_refund_amount > 0)
+                                    <td colspan="2" class="bg-light font-weight-bold" style="vertical-align: middle;">返金額(残￥{{ number_format($Possible_refund_amount) }})</td>
+                                    @if ($Credit_Cancel->cancel_status == 'NG')
+                                        <td id="credit-cancel-price_tables_name" colspan="2" style="text-align: right;" class="font-weight-bold"><input id="credit_cancel_price" style="text-align: right;width: 50%;" name="credit_cancel_price" value="{{ $Credit_Cancel->refund_amount }}">円
+                                        <input type="button" class="btn btn-danger" value="返品" onClick="goCreditCancel()"></td>
+                                    @else
+                                        <td id="credit-cancel-price_tables_name" colspan="2" style="text-align: right;" class="font-weight-bold"><input id="credit_cancel_price" style="text-align: right;width: 50%;" name="credit_cancel_price" value="0">円
+                                        <input type="button" class="btn btn-danger" value="キャンセル" onClick="goCreditCancel()"></td><td></td>
+                                        </tr><tr>
+                                        <td colspan="2" class="bg-light font-weight-bold" style="vertical-align: middle;"></td>
+                                        <td id="credit_cancel_price{{ $cancnt }}" colspan="2" style="text-align: right;" class="font-weight-bold" name="credit_cancel_price{{ $cancnt }}" value={{ $Credit_Cancel->refund_amount }}>{{ $Credit_Cancel->refund_amount }} 円</td>
+                                    @endif
+                                @else
+                                    <td colspan="2" class="bg-light font-weight-bold" style="vertical-align: middle;">返金額(残￥{{ number_format($Possible_refund_amount) }})</td>
+                                    <td id="credit_cancel_price{{ $cancnt }}" colspan="2" style="text-align: right;" class="font-weight-bold" name="credit_cancel_price{{ $cancnt }}" value={{ $Credit_Cancel->refund_amount }}>{{ $Credit_Cancel->refund_amount }} 円</td>
+                                @endif
+                                <td>{{ $Credit_Cancel->cancel_status }}</td>
+                            </tr>
+                            @else
+                            <tr>
+                                <td colspan="2" class="bg-light font-weight-bold" style="vertical-align: middle;"></td>
+                                <td id="credit_cancel_price{{ $cancnt }}" colspan="2" style="text-align: right;" class="font-weight-bold" name="credit_cancel_price{{ $cancnt }}" value={{ $Credit_Cancel->refund_amount }}>{{ $Credit_Cancel->refund_amount }} 円</td>
+                                <td>{{ $Credit_Cancel->cancel_status }}</td>
+                            </tr>
+                            @endif
+                            <?php $cancnt++; ?>
+                        @endforeach
+                      @else
+                      <tr>
+                        <td colspan="2" class="bg-light font-weight-bold" style="vertical-align: middle;">返金額(残￥{{ number_format($Possible_refund_amount) }})</td>
+                        <td id="credit-cancel-price_tables_name" colspan="2" style="text-align: right;" class="font-weight-bold"><input id="credit_cancel_price" style="text-align: right;width: 50%;" name="credit_cancel_price" value="0">円
+                        <input type="button" class="btn btn-danger" value="キャンセル" onClick="goCreditCancel()"></td><td></td>
+                      </tr>
+                      @endif
+                      <input type="hidden" id="credit_cancel_flg" name="credit_cancel_flg" value="0">
                   </tbody>
                 </table>
                         <div class="form-group row mb-0">
@@ -251,15 +321,41 @@ $('.submit').click(function() {
   $(this).parents('form').submit();
 });
 $('.submit-send').click(function() {
-  var checked = confirm("【確認】送信してよろしいですか？");
-  if (checked == true) {
-      $(this).parents('form').attr('action', $(this).data('action'));
-      $(this).parents('form').submit();
-      return true;
-  } else {
-      return false;
-  }
+    $flag = true;
+    @php
+    for($i=1;$i<=6;$i++){
+        if(array_key_exists($i, $Number_req)){
+            echo "if($('#per-number" . $i . "').length){\nif($('#per-number" . $i . "').val() != " . $Number_req[$i] . "){\$flag = false;\n}\n}";
+        }
+    }
+    @endphp
+    if($flag){
+        var checked = confirm("【確認】送信してよろしいですか？");
+        if (checked == true) {
+            $(this).parents('form').attr('action', $(this).data('action'));
+            $(this).parents('form').submit();
+            return true;
+        } else {
+            return false;
+        }
+    }else{
+        confirm("価格表を更新した後は「変更する」ボタンをクリック");
+        return false;
+    }
+
 });
+function goCreditCancel() {
+    var checked = confirm("【確認】返金処理を実行してよろしいですか？");
+    if (checked == true) {
+        $('select[name="status"]').val("キャンセル");
+        $('#credit_cancel_flg').val(1);
+        $('.submit').parents('form').attr('action', '/client/reservations/update/{{ $reservations->id }}');
+        $('.submit').parents('form').submit();
+        return true;
+    } else {
+        return false;
+    }
+}
 </script>
 @stop
 
