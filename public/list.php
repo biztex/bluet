@@ -26,6 +26,7 @@
     // $json = file_get_contents($url);
     // $plans0 = json_decode($json,true);
     $plans0 = ndCurlExecJson('api/plans/json/0');
+
     // 日帰りツアー(1)
     // $url = "http://blue-tourism-hokkaido.website/api/plans/json/1";
     // $json = file_get_contents($url);
