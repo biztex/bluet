@@ -196,7 +196,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 	</script>
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </div>
-<div class="header"><a href="list.php"><img src ="https://blue-tourism-hokkaido.website/img/logo.png"></a></div>
+<div class="header"><a href="list.php"><img src ="<?php echo ndGetEnv('APP_URL')?>/img/logo.png"></a></div>
 <div class="container-plan">
 	<div class="title">
 		<span><?=$plan[0]['name']?></span>
@@ -304,46 +304,51 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                 	    }
                 	    $count = 0;
                 	    foreach ($stocks['stocks'] as $stock) {
-                	    	if ($current_date->format('Y-m-d') == $stock['res_date'] && $stock[is_active] == 1) {
+                	    	if ($current_date->format('Y-m-d') == $stock['res_date'] && $stock['is_active'] == 1) {
+
 					// 現在時刻
 					$now = new DateTime();
 			                // 受付開始日計算
-			                $time1 = sprintf('%02d', $plan[0][res_before_time]);
+			                $time1 = sprintf('%02d', $plan[0]['res_before_time']);
 			                $res_before_datetime = new DateTime($stock['res_date'] . " " . $time1 . ":00");
-			                $res_before_datetime = $res_before_datetime->modify('-' . $plan[0][res_before_day]. ' day')->format('Y-m-d H:i');
+			                $res_before_datetime = $res_before_datetime->modify('-' . $plan[0]['res_before_day']. ' day')->format('Y-m-d H:i');
+
 			                //////
 			                //// 受付締切日計算（即時予約）
-			                $time2 = sprintf('%02d', $plan[0][res_end_time]);
+			                $time2 = sprintf('%02d', $plan[0]['res_end_time']);
 			                $res_end_datetime = new DateTime($stock['res_date'] . " " . $time2 . ":00");
-			                $res_end_datetime = $res_end_datetime->modify('-' . ($plan[0][res_end_day]) . ' day');
+			                $res_end_datetime = $res_end_datetime->modify('-' . ($plan[0]['res_end_day']) . ' day');
 			                //////
 			                //// 受付締切日計算（リクエスト予約）
-			                $time3 = sprintf('%02d', $plan[0][req_before_time]);
+			                $time3 = sprintf('%02d', $plan[0]['req_before_time']);
 			                $req_before_datetime = new DateTime($stock['res_date'] . " " . $time3 . ":00");
-			                $req_before_datetime = $req_before_datetime->modify('-' . ($plan[0][req_before_day]) . ' day');
+			                $req_before_datetime = $req_before_datetime->modify('-' . ($plan[0]['req_before_day']) . ' day');
+
 			                ////
-                	    		//if ($stock[res_type] == 0 && $stock['res_date'] > date("Y-m-d")) {
-                	    		if ($stock[res_type] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		//if ($stock['res_type'] == 0 && $stock['res_date'] > date("Y-m-d")) {
+
+                	    		if ($stock['res_type'] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+
                 	    		    echo '<td>' . $d . '<br />';
-                                            if ($stock[limit_number] > 0) {
+                                            if ($stock['limit_number'] > 0) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
-                	    		    } else if ($stock[limit_number] == 0) {
+                	    		    } else if ($stock['limit_number'] == 0) {
                    	                        echo '×';
                 	    		    } else {
                    	                        echo '-';
                 	    		    }
 					    $count++;
-                	    		} else if ($stock[res_type] == 1) {
+                	    		} else if ($stock['res_type'] == 1) {
                 	    		    echo '<td>' . $d . '<br />';
-                	    		    if ($stock[limit_number] > 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		    if ($stock['limit_number'] > 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
-                	    		    } else if ($stock[limit_number] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		    } else if ($stock['limit_number'] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
                 	    		    } else {
                    	                        echo '-';
                 	    		    }
 					    $count++;
-                	    		} else if ($stock[res_type] == 2 && $stock['res_date'] >= date("Y-m-d")  && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		} else if ($stock['res_type'] == 2 && $stock['res_date'] >= date("Y-m-d")  && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
                                             echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
 					    $count++;
@@ -402,46 +407,46 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                 	    }
                 	    $count = 0;
                 	    foreach ($stocks['stocks'] as $stock) {
-                	    	if ($current_date->format('Y-m-d') == $stock['res_date'] && $stock[is_active] == 1) {
+                	    	if ($current_date->format('Y-m-d') == $stock['res_date'] && $stock['is_active'] == 1) {
 					// 現在時刻
 					$now = new DateTime();
 			                // 受付開始日計算
-			                $time1 = sprintf('%02d', $plan[0][res_before_time]);
+                            $time1 = sprintf('%02d', $plan[0]['res_before_time']);
 			                $res_before_datetime = new DateTime($stock['res_date'] . " " . $time1 . ":00");
-			                $res_before_datetime = $res_before_datetime->modify('-' . $plan[0][res_before_day]. ' day')->format('Y-m-d H:i');
+			                $res_before_datetime = $res_before_datetime->modify('-' . $plan[0]['res_before_day']. ' day')->format('Y-m-d H:i');
 			                //////
 			                //// 受付締切日計算（即時予約）
-			                $time2 = sprintf('%02d', $plan[0][res_end_time]);
+			                $time2 = sprintf('%02d', $plan[0]['res_end_time']);
 			                $res_end_datetime = new DateTime($stock['res_date'] . " " . $time2 . ":00");
-			                $res_end_datetime = $res_end_datetime->modify('-' . ($plan[0][res_end_day]) . ' day');
+			                $res_end_datetime = $res_end_datetime->modify('-' . ($plan[0]['res_end_day']) . ' day');
 			                //////
 			                //// 受付締切日計算（リクエスト予約）
-			                $time3 = sprintf('%02d', $plan[0][req_before_time]);
+			                $time3 = sprintf('%02d', $plan[0]['req_before_time']);
 			                $req_before_datetime = new DateTime($stock['res_date'] . " " . $time3 . ":00");
-			                $req_before_datetime = $req_before_datetime->modify('-' . ($plan[0][req_before_day]) . ' day');
+			                $req_before_datetime = $req_before_datetime->modify('-' . ($plan[0]['req_before_day']) . ' day');
 			                ////
-                	    		//if ($stock[res_type] == 0 && $stock['res_date'] > date("Y-m-d")) {
-                	    		if ($stock[res_type] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		//if ($stock['res_type'] == 0 && $stock['res_date'] > date("Y-m-d")) {
+                	    		if ($stock['res_type'] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
-                                            if ($stock[limit_number] > 0) {
+                                            if ($stock['limit_number'] > 0) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
-                	    		    } else if ($stock[limit_number] == 0) {
+                	    		    } else if ($stock['limit_number'] == 0) {
                    	                        echo '×';
                 	    		    } else {
                    	                        echo '-';
                 	    		    }
 					    $count++;
-                	    		} else if ($stock[res_type] == 1) {
+                	    		} else if ($stock['res_type'] == 1) {
                 	    		    echo '<td>' . $d . '<br />';
-                	    		    if ($stock[limit_number] > 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		    if ($stock['limit_number'] > 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
-                	    		    } else if ($stock[limit_number] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		    } else if ($stock['limit_number'] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
                 	    		    } else {
                    	                        echo '-';
                 	    		    }
 					    $count++;
-                	    		} else if ($stock[res_type] == 2 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		} else if ($stock['res_type'] == 2 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
                                             echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
 					    $count++;
@@ -1001,7 +1006,7 @@ $(function() {
         date.setMonth(date.getMonth() - 2); // ここで1ヶ月前をセット
         let prevMonthYear = date.getFullYear();
         let prevMonth = date.getMonth() + 1;
-        location.href = 'https://blue-tourism-hokkaido.website/public/detail.php/?page_id=2622&year=' + prevMonthYear + '&month=' + prevMonth + '&plan_id=' + planId + '#anchor-calendar';
+        location.href = "<? echo ndGetEnv('APP_URL')?>" + 'detail.php?page_id=2622&year=' + prevMonthYear + '&month=' + prevMonth + '&plan_id=' + planId + '#anchor-calendar';
     });
     $('.next-month').click(function () {
         let year = "<?= $current_y ?>",
@@ -1011,7 +1016,12 @@ $(function() {
         date.setMonth(date.getMonth() + 1); // ここで1ヶ月後をセット
         let nextMonthYear = date.getFullYear();
         let nextMonth = date.getMonth();
-        location.href = 'https://blue-tourism-hokkaido.website/public/detail.php/?page_id=2622&year=' + nextMonthYear + '&month=' + nextMonth + '&plan_id=' + planId + '#anchor-calendar';
+        console.log(nextMonth);
+        if(nextMonth == 0){
+            nextMonthYear -= 1;
+            nextMonth = 12
+        }
+        location.href = "<?php echo ndGetEnv('APP_URL')?>" + 'detail.php?page_id=2622&year=' + nextMonthYear + '&month=' + nextMonth + '&plan_id=' + planId + '#anchor-calendar';
     });
 });
 
@@ -1088,7 +1098,7 @@ $('.reserve-button').click(function () {
     } else {
         resType = 1;
     }
-	open( "https://blue-tourism-hokkaido.website/reservations/create?plan_id=" + planId + "&date=" + date + '&is_request=' + resType, "_blank" ) ;
+	open( "<?php echo ndGetEnv('APP_URL')?>" + "/reservations/create?plan_id=" + planId + "&date=" + date + '&is_request=' + resType, "_blank" ) ;
 });
 
 </script>
