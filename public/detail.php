@@ -4,13 +4,13 @@ if ($_GET["plan_id"]) {
     $plan_id = $_GET["plan_id"];
 }
 if ($_GET["preview"] == 1) {
-    $url = "api/plan/json/" . $plan_id . '/1';
+    $url = "http://localhost/api/plan/json/" . $plan_id . '/1';
 } else {
-    $url = "api/plan/json/" . $plan_id;
+    $url = "http://localhost/api/plan/json/" . $plan_id;
 }
-// $array = file_get_contents($url);
-// $plan = json_decode($array,true);
-$plan = ndCurlExecJson($url);
+$array = file_get_contents($url);
+$plan = json_decode($array,true);
+// $plan = ndCurlExecJson($url);
 if (!$plan) {
     header('Location: '. ndGetEnv('APP_URL') .'list.php');
 }
@@ -1098,7 +1098,7 @@ $('.reserve-button').click(function () {
     } else {
         resType = 1;
     }
-	open( "<?php echo ndGetEnv('APP_URL')?>" + "/reservations/create?plan_id=" + planId + "&date=" + date + '&is_request=' + resType, "_blank" ) ;
+	open( "<?php echo ndGetEnv('APP_URL')?>" + "reservations/create?plan_id=" + planId + "&date=" + date + '&is_request=' + resType, "_blank" ) ;
 });
 
 </script>
