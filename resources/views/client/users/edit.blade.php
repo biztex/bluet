@@ -52,11 +52,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label text-md-right"><span class="badge badge-danger">必須</span> {{ __('セイ') }}</label>
+                            <label class="col-md-2 col-form-label text-md-right"> {{ __('セイ') }}</label>
                             <div class="col-md-2">
                                 <input id="" type="text" class="form-control" name="kana_last" value="{{ old('kana_last',$users->kana_last) }}">
                             </div>
-                            <label class="col-md-1 col-form-label text-md-right"><span class="badge badge-danger">必須</span> {{ __('メイ') }}</label>
+                            <label class="col-md-1 col-form-label text-md-right"> {{ __('メイ') }}</label>
                             <div class="col-md-2">
                                 <input id="" type="text" class="form-control" name="kana_first" value="{{ old('kana_first',$users->kana_first) }}">
                             </div>
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label text-md-right"><span class="badge badge-danger">必須</span> {{ __('郵便番号') }}</label>
+                            <label class="col-md-2 col-form-label text-md-right"> {{ __('郵便番号') }}</label>
                             <div class="col-md-3">
                                 <input id="" type="text" class="form-control" name="postal_code" value="{{ old('postal_code',$users->postal_code) }}">
                             </div>
@@ -166,6 +166,7 @@
                                     <option value="宮崎県" @if(old('prefecture',$users->prefecture)=='宮崎県') selected @endif>宮崎県</option>
                                     <option value="鹿児島県" @if(old('prefecture',$users->prefecture)=='鹿児島県') selected @endif>鹿児島県</option>
                                     <option value="沖縄県" @if(old('prefecture',$users->prefecture)=='沖縄県') selected @endif>沖縄県</option>
+                                    <option value="海外" @if(old('prefecture',$users->prefecture)=='海外') selected @endif>海外</option>
                                 </select>
                             </div>
                         </div>

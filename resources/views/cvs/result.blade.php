@@ -46,7 +46,7 @@
 
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-12 complete_page_totop">
             <hr class="mb-4">
             <a class="btn btn-primary btn"
                href="https://blue-tourism-hokkaido.com/jp">TOPページに戻る</a>

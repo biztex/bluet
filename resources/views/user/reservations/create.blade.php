@@ -8,8 +8,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
-
+<link rel="stylesheet" type="text/css" href="/public/css/template.css">
 <body>
+<div id="glang">
+	<div id="google_translate_element"></div>
+	<script type="text/javascript">
+	function googleTranslateElementInit() {
+	  new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+	}
+	</script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
 <div class="header"><a href="/list.php"><img src ="{{ asset('img/logo.png')}}"></a></div>
 <div class="container-plan">
     {{--成功もしくは失敗のメッセージ--}}
@@ -32,7 +41,7 @@
     <div class="reservation">
         @if (request('is_request') == 0)
         <span class="page-title">予約内容の入力</span><small>-　 株式会社ブルーツーリズム北海道</small>
-        @else
+        @else 
         <span class="page-title">リクエスト予約内容の入力</span><small>-　 株式会社ブルーツーリズム北海道</small>
         <div class="notice-request"><span class="text-red">リクエスト予約は即時予約ではありません。必ず実施会社と予約のやり取りをしてください。</span></div>
         @endif
@@ -45,7 +54,7 @@
                 <p><strong>実施会社</strong>：株式会社ブルーツーリズム北海道</p>
                 <p><strong>実施日時</strong></p>
 @foreach($plan->activities as $activity)
-  @if ($activity->is_overday == 1 && $activity->days_after != 00)
+  @if ($activity->is_overday == 1 && $activity->days_after != 00) 
 <small>・{{ date('Y年m月d日', strtotime($date)) }} {{ $activity->start_hour }}:{{ $activity->start_minute }} 〜 {{ date('Y年m月d日', strtotime($date . " " . substr($activity->days_after, 1, 2) . " day")) }} {{ $activity->end_hour }}:{{ $activity->end_minute }}</small><br />
   @else
 <small>・{{ date('Y年m月d日', strtotime($date)) }} {{ $activity->start_hour }}:{{ $activity->start_minute }} 〜 {{ $activity->end_hour }}:{{ $activity->end_minute }}</small><br />
@@ -54,17 +63,17 @@
             </div>
         </div>
         <p class="mid-title">予約数</p>
-        <div class="content">
+        <div class="content"> 
             <table>
                 <tr>
                   <th>料金 <span class="text-red">※</span></th><td><hr />@php
 foreach ($plan->prices as $i => $price) {
 echo '<p>';
     if ($price->week_flag == 0) {
-       echo $price->price_types->name . " / " . number_format($price->price) . " 円";
+       echo $price->price_types->name . " / " . number_format($price->price) . " 円"; 
     }
     if ($price->week_flag == 1) {
-       echo $price->price_types->name . " / " . number_format($price->{$weekday}) . " 円";
+       echo $price->price_types->name . " / " . number_format($price->{$weekday}) . " 円"; 
     }
     echo '<span class="number-text"> 人</span><input type="text" name="type' . $price->type . '_number" class="number" min="0" max="999" value="0"><hr /></p>';
 }
@@ -74,7 +83,7 @@ echo '<p>';
             </table>
         </div>
         <p class="mid-title">時間選択</p>
-        <div class="content">
+        <div class="content"> 
             <table>
                 <tr>
                   <th>参加時間帯 <span class="text-red">※</span></th><td><select name="selected_activity" required><option value selected>選択してください</option>@foreach($plan->activities as $activity) @if ($activity->is_overday == 1 && $activity->days_after != 00)
@@ -87,19 +96,21 @@ echo '<p>';
             </table>
         </div>
         <p class="mid-title">予約代表者情報</p>
-        <div class="content">
+        <div class="content"> 
             <table>
                 <tr>
                   <th>予約代表者氏名 <span class="text-red">※</span></th><td>姓　<input type="text" name="name_last" value="{{ old('name_last') }}" required>　名　<input type="text" name="name_first" value="{{ old('name_first') }}" required></td>
                 </tr>
                 <tr>
-                  <th>予約代表者氏名カナ <span class="text-red">※</span></th><td>セイ　<input type="text" name="kana_last" pattern="(?=.*?[\u30A1-\u30FC])[\u30A1-\u30FC\s]*"  value="{{ old('kana_last') }}" required>　メイ　<input type="text" name="kana_first" pattern="(?=.*?[\u30A1-\u30FC])[\u30A1-\u30FC\s]*" value="{{ old('kana_first') }}" required></td>
+                  <th>予約代表者氏名カナ <span class="text-red"></span></th><td>セイ　<input type="text" name="kana_last" pattern="(?=.*?[\u30A1-\u30FC])[\u30A1-\u30FC\s]*"  value="{{ old('kana_last') }}">　メイ　<input type="text" name="kana_first" pattern="(?=.*?[\u30A1-\u30FC])[\u30A1-\u30FC\s]*" value="{{ old('kana_first') }}"></td>
                 </tr>
                 <tr>
                   <th>メールアドレス <span class="text-red">※</span></th><td><input type="email" name="email" class="width-half" value="{{ old('email') }}" required> <small>※予約確認メールをお送りします</small></td>
                 </tr>
                 <tr>
-                  <th>住所 <span class="text-red">※</span></th><td>〒　<input type="text" name="postalcode" pattern="\d{3}-?\d{4}" value="{{ old('postalcode') }}" required><br />
+                  <th>住所または宿泊ホテル名 <span class="text-red">※</span></th>
+                                    <td>your area&nbsp;<input type="radio" id="japan" name="area" value="japan" checked><label for="japan">Japan</label>&nbsp;<input type="radio" id="overseas" name="area" value="overseas"><label for="overseas">Overseas</label><br />
+〒　<input type="text" name="postalcode" pattern="\d{3}-?\d{4}" value="{{ old('postalcode') }}"><br />
 都道府県　<select name="prefecture" required>
                                     <option value>選択してください</option>
                                     <option value="北海道" @if(old('prefecture')=='北海道') selected @endif>北海道</option>
@@ -148,8 +159,9 @@ echo '<p>';
                                     <option value="大分県" @if(old('prefecture')=='大分県') selected @endif>大分県</option>
                                     <option value="宮崎県" @if(old('prefecture')=='宮崎県') selected @endif>宮崎県</option>
                                     <option value="鹿児島県" @if(old('prefecture')=='鹿児島県') selected @endif>鹿児島県</option>
-                                    <option value="沖縄県" @if(old('prefecture')=='沖縄県') selected @endif>沖縄県</option></select>
-                    <br />以降住所　<input type="text" name="address" class="width-half" value="{{ old('address') }}" required></td>
+                                    <option value="沖縄県" @if(old('prefecture')=='沖縄県') selected @endif>沖縄県</option>
+                                    <option value="海外" @if(old('prefecture')=='海外') selected @endif>海外</option></select>
+                    <br /><span id="label_address">以降住所</span>　<input type="text" name="address" class="width-half" value="{{ old('address') }}" required></td>
                 </tr>
                 <tr>
                   <th>電話番号 <span class="text-red">※</span></th><td><input type="text" name="tel" pattern="\d{2,4}-?\d{2,4}-\d{3,4}" value="{{ old('tel') }}" required placeholder="ハイフンありで入力"></td>
@@ -170,7 +182,7 @@ echo '<p>';
         </div>
         @if ($plan->question_flag == 1)
         <p class="mid-title">質問事項</p>
-        <div class="content">
+        <div class="content"> 
             <table>
                 <tr>
                   <th>質問事項 @if ($plan->answer_flag == 1) <span class="text-red">※</span> @endif</th><td>{{ $plan->question_content }}<br /><textarea rows="5" name="answer" class="answer" @if ($plan->answer_flag == 1){{ 'required' }}@endif >{{ old('answer') }}</textarea></td>
@@ -180,7 +192,7 @@ echo '<p>';
         @endif
         @if (request('is_request') == 0)
         <p class="mid-title">料金決済</p>
-        <div class="content">
+        <div class="content"> 
             <table>
                 <tr>
                   <th>お支払方法 <span class="text-red">※</span></th>
@@ -248,7 +260,7 @@ echo '<p>';
             </tbody>
         </table>
         <p class="mid-title">キャンセル規定</p>
-        <div class="content">
+        <div class="content"> 
             <table>
                 <tr>
                   <th>キャンセル規定</th>
@@ -268,18 +280,19 @@ echo '<p>';
             <button type="submit">リクエスト予約する</button><br /><small class="text-red">※リクエスト予約後、実施会社からの連絡を必ず確認してください</small>
         </div>
         @endif
-
+        
     </div>
     </form>
 </div>
 <footer class="footer_wrap">
     <a href="../company.php">会社概要</a>
-    <a href="../tradelaw.php">特定商取引法に基づく表記</a>
+    <!-- <a href="../tradelaw.php">特定商取引法に基づく表記</a> -->
     <a href="../privacy.php">プライバシーポリシー</a>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-12 offset-sm-4 col-sm-8">Copyright © BlueTourismHokkaido All rights reserved</div>
-    </div>
+    </div> -->
 </footer>
+<div class="copy">Copyright © BlueTourismHokkaido All rights reserved</div>
 </body>
 <style type="text/css">
 
@@ -291,20 +304,8 @@ echo '<p>';
     text-align: right;
     font-size: 0.8rem;
 }
-.header {
-    margin: 0 61px;
-    padding: 8px 0 10px 0;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
-}
-.header img {
-    width: 200px;
-}
-footer {
-    text-align: center;
-    font-size: 0.85rem;
-    margin-bottom: 70px;
-}
+
+
 .confirm {
     text-align: center;
     margin: 40px 0 60px 0;
@@ -322,7 +323,7 @@ footer {
 .confirm button:hover {
     opacity: 0.7;
 }
-
+    
 .answer {
     width: 99%;
     margin: 10px 0 0 0;
@@ -352,7 +353,7 @@ input.is-member {
     background-color: #ececec;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
-}
+} 
 .content tr:last-child th,
 .content tr:last-child td {
     border-bottom: 0px;
@@ -374,7 +375,7 @@ input.is-member {
     background-color: #ececec;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
-}
+} 
 .content-activity tr:last-child th,
 .content-activity tr:last-child td {
     border-bottom: 0px;
@@ -391,6 +392,7 @@ input.is-member {
     border-bottom: 1px solid #ccc;
     white-space: pre-wrap;
 }
+
 .plan-image {
     display: flex;
 }
@@ -513,36 +515,43 @@ hr {
     .notice-input {
         text-align:left;
     }
+    .content td select{
+    max-width: 250px;
+}
 }
 
-/*footer2022-02-16*/
-.footer_wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 60px;
-}
-.footer_wrap a {
-    margin-right:30px;
-}
-.footer_wrap a:nth-last-child(1) {
-    margin-right:0px;
-}
-.copy {
-    text-align:center;
-    margin-top:15px;
-}
-@media screen and (max-width: 767px) {
-    .footer_wrap {
-    flex-direction:column;
-}
-}
+
 </style>
 <script>
 $('select[name="selected-activity"]').change(function() {
     var val = $(this).children('option:selected').text();
     $('.meeting-point-placeholder').text(val);
     $('.place-placeholder').text(val);
+});
+$('input[name="area"]').change(function() {
+    if($(this).val() == "japan"){
+        $('input[name="postalcode"]').removeAttr('readonly');
+        $('input[name="postalcode"]').removeAttr('style');
+        $('select[name="prefecture"]').removeAttr('readonly');
+        $('select[name="prefecture"]').removeAttr('style');
+        $('select[name="prefecture"]').val(null);
+        $('#label_address').text("以降住所");
+        $('input[name="tel"]').attr('pattern', '\\d{2,4}-?\\d{2,4}-\\d{3,4}');
+        $('input[name="tel"]').attr('placeholder', 'ハイフンありで入力');
+        $('input[name="tel2"]').attr('pattern', '\\d{2,4}-?\\d{2,4}-\\d{3,4}');
+        $('input[name="tel2"]').attr('placeholder', 'ハイフンありで入力');
+    }else{
+        $('input[name="postalcode"]').attr('readonly', 'readonly');
+        $('input[name="postalcode"]').attr('style', 'background-color: lightgray;');
+        $('select[name="prefecture"]').attr('readonly', 'readonly');
+        $('select[name="prefecture"]').attr('style', 'background-color: lightgray;pointer-events: none;');
+        $('select[name="prefecture"]').val("海外");
+        $('#label_address').text("Name of the hotel");
+        $('input[name="tel"]').attr('pattern', '\\+\\d{1,5}-?\\d{2,4}-?\\d{2,4}-\\d{3,4}');
+        $('input[name="tel"]').attr('placeholder', '+81-90-0000-0000');
+        $('input[name="tel2"]').attr('pattern', '\\+\\d{1,5}-?\\d{2,4}-?\\d{2,4}-\\d{3,4}');
+        $('input[name="tel2"]').attr('placeholder', '+81-90-0000-0000');
+    }
 });
 </script>
 </html>

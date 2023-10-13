@@ -64,7 +64,7 @@ Route::post('cvs', '\App\Http\Controllers\CvsController@cvsAuthorize');
 Route::get('cvs/result/{orderId}', '\App\Http\Controllers\CvsController@authorizeResult');
 Route::get('pay', '\App\Http\Controllers\ReservationsController@emailToPay');
 
-Route::post('push/mpi', 'PushController@mpi');
+Route::match(['put', 'post'], 'push/mpi', '\App\Http\Controllers\PushController@mpi');
 
 /**
 * 非認証ページ

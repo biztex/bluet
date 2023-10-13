@@ -2,18 +2,11 @@
 <html lang="ja">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../public/css/template.css">
     <title>プライバシーポリシー | ブルーツーリズム北海道 </title>
 
     <style type="text/css">
-    .header {
-        margin: 0 61px;
-        padding: 8px 0 10px 0;
-        text-align: left;
-        border-bottom: 1px solid #ccc;
-    }
-    .header img {
-        width: 200px;
-    }
+
     .flex-container-plans {
         justify-content: center;
         flex-wrap: wrap;
@@ -302,7 +295,7 @@
 
     <footer class="footer_wrap">
         <a href="company.php">会社概要</a>
-        <a href="tradelaw.php">特定商取引法に基づく表記</a>
+        <!-- <a href="tradelaw.php">特定商取引法に基づく表記</a> -->
         <a href="privacy.php">プライバシーポリシー</a>
     </footer>
     <div class="copy">Copyright © BlueTourismHokkaido All rights reserved</div>

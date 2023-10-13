@@ -14,6 +14,7 @@
                     </div>
                 </li>
 @php
+if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00'))){
   foreach($reservation->plan->prices as $i => $price) {
       echo '<li class="list-group-item d-flex justify-content-between">';
       echo '<div>';
@@ -32,6 +33,29 @@
       }
       echo '</li>';
   }
+}else{
+    $Number_of_reservations = json_decode($reservation->Number_of_reservations);
+        foreach($reservation->plan->prices as $i => $price) {
+            if(array_key_exists(sprintf('type%d_number', $price->price_types->number), $Number_of_reservations)){
+                echo '<li class="list-group-item d-flex justify-content-between">';
+                echo '<div>';
+                echo '<h6 class="my-0">';
+                if ($price->week_flag == 0) {
+                    echo $price->price_types->name . " / &yen;" . number_format($price->price) . " × " . $Number_of_reservations->{'type'.$price->price_types->number.'_number'};
+                    echo '</h6>';
+                    echo '</div>';
+                    echo '<span class="text-muted">&yen;' . number_format($price->price * $Number_of_reservations->{'type'.$price->price_types->number.'_number'}) . '</span>';
+                }
+                if ($price->week_flag == 1) {
+                    echo $price->price_types->name . " / &yen;" . number_format($price->{$weekday}) . " × " . $Number_of_reservations->{'type'.$price->price_types->number.'_number'};
+                    echo '</h6>';
+                    echo '</div>';
+                    echo '<span class="text-muted">&yen;' . number_format($price->{$weekday} * $Number_of_reservations->{'type'.$price->price_types->number.'_number'}) . '</span>';
+                }
+                echo '</li>';
+            }
+        }
+}
 @endphp
                 <li class="list-group-item d-flex justify-content-between">
                     <strong>合計金額</strong>
