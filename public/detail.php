@@ -1,16 +1,18 @@
 <?php
+require_once('./common.php');
 if ($_GET["plan_id"]) {
     $plan_id = $_GET["plan_id"];
 }
 if ($_GET["preview"] == 1) {
-    $url = "http://localhost/api/plan/json/" . $plan_id . '/1';
+    $url = "api/plan/json/" . $plan_id . '/1';
 } else {
-    $url = "http://localhost/api/plan/json/" . $plan_id;
+    $url = "api/plan/json/" . $plan_id;
 }
-$array = file_get_contents($url);
-$plan = json_decode($array,true);
+// $array = file_get_contents($url);
+// $plan = json_decode($array,true);
+$plan = ndCurlExecJson($url);
 if (!$plan) {
-    header('Location: https://blue-tourism-hokkaido.website/public/list.php');
+    header('Location: '. ndGetEnv('APP_URL') .'list.php');
 }
 $plan_json = json_encode($array, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $plan_json = str_replace('¥u0022', '¥¥¥"', $plan_json);
@@ -81,7 +83,7 @@ img.emoji {
 					position: absolute;
 				}
 			}
-		
+
 </style>
 <link rel='stylesheet' id='astra-theme-css-css'  href='https://blue-tourism-hokkaido.com/wp/wp-content/themes/astra/assets/css/minified/style.min.css?ver=1.3.2' type='text/css' media='all' />
 <style id='astra-theme-css-inline-css' type='text/css'>
@@ -106,7 +108,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 <script type='text/javascript' src='https://blue-tourism-hokkaido.com/wp/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
 <link rel='https://api.w.org/' href='https://blue-tourism-hokkaido.com/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blue-tourism-hokkaido.com/wp/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blue-tourism-hokkaido.com/wp/wp-includes/wlwmanifest.xml" /> 
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blue-tourism-hokkaido.com/wp/wp-includes/wlwmanifest.xml" />
 <meta name="generator" content="WordPress 4.9.19" />
 <link rel='shortlink' href='https://wp.me/P9W5cl-FU' />
 <link rel="alternate" type="application/json+oembed" href="https://blue-tourism-hokkaido.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblue-tourism-hokkaido.com%2F%3Fpage_id%3D2598" />
@@ -126,7 +128,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
            if(jQuery(document).scrollTop() > fixed_header_scroll){
              jQuery(fixed_header_class).addClass("myfixedHeader");
            }else{
-               jQuery(fixed_header_class).removeClass("myfixedHeader");	 
+               jQuery(fixed_header_class).removeClass("myfixedHeader");
                 }
    });</script> <style type="text/css">
     .myfixedHeader{background-color: !important;}
@@ -134,7 +136,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 	.myfixedHeader { height: ;}
 	.myfixedHeader { padding: !important;}
     .myfixedHeader {margin: 0 auto !important; width:100% !important; position:fixed; z-index:99999; transition:all 0.7s ease; left:0; right:0; top:0; text-align:center !important; }
-    { transition:all 0.7s ease; }</style>	
+    { transition:all 0.7s ease; }</style>
 <link rel='dns-prefetch' href='//v0.wordpress.com'/>
 <style type='text/css'>img#wpstats{display:none}</style><style type="text/css" media="print">#wpadminbar { display:none; }</style>
 <!-- <style type="text/css" media="screen">
@@ -180,7 +182,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
     background-color: #fff;
     color: #000;
     width: 80%;
-    }			
+    }
 </style>
 </head>
 
@@ -197,22 +199,23 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 <div class="header"><a href="list.php"><img src ="https://blue-tourism-hokkaido.website/img/logo.png"></a></div>
 <div class="container-plan">
 	<div class="title">
-		<span><?=$plan[0][name]?></span>
+		<span><?=$plan[0]['name']?></span>
 	</div>
 	<div class="price">
-	<?php 
-            foreach ($plan[0][prices] as $i => $price) {
-		echo '<p class="type">' . $price[price_types][name]. '</p>'; 
-		if ($plan[0][prices][$i][week_flag] == 0) {
-		    $normal_price = $price[price];
-                    $before_price = $price[before_price];
-                    if ($before_price) {
-                    	echo '<span class="before-price"><strike>' . number_format($before_price) . '円</strike> </span><span class="normal-price">' . number_format($normal_price) . '円</span>';
-                    } else {
-                    	echo '<span class="normal-price">' . number_format($normal_price) . '円</span>';
-                    }
+	<?php
+        $is_discount = $plan[0]['is_discount'];
+            foreach ($plan[0]['prices'] as $i => $price) {
+		echo '<p class="type">' . $price['price_types']['name']. '</p>';
+		if ($plan[0]['prices'][$i]['week_flag'] == 0) {
+            $normal_price = $price['price'];
+            $before_price = $price['before_price'];
+            if ($before_price && $is_discount != 0) {
+                echo '<span class="before-price"><strike>' . number_format($before_price) . '円</strike> </span><span class="normal-price">' . number_format($normal_price) . '円</span>';
+            } else {
+                echo '<span class="normal-price">' . number_format($normal_price) . '円</span>';
+            }
 		} else {
-                    $prices = [];
+                $prices = [];
 	            $prices[] = $price[monday];
 	            $prices[] = $price[tuesday];
 	            $prices[] = $price[wednesday];
@@ -221,32 +224,32 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 	            $prices[] = $price[saturday];
 	            $prices[] = $price[sunday];
 	            $prices[] = $price[holiday];
-                    $min_price = min($prices);
-                    $max_price = max($prices);
-                    $before_price = $price[before_price];
-                    if ($before_price) {
-                    	echo '<span class="before-price"><strike>' . number_format($before_price) . '円</strike> </span><span class="normal-price">' . number_format($min_price) . '円〜' . number_format($max_price)  . '円</span>';
-                    } else {
-                    	echo '<span class="normal-price">' . number_format($min_price) . '円〜' . number_format($max_price) . '円</span>';
-                    }
-		}
+                $min_price = min($prices);
+                $max_price = max($prices);
+                $before_price = $price['before_price'];
+                if ($before_price) {
+                    echo '<span class="before-price"><strike>' . number_format($before_price) . '円</strike> </span><span class="normal-price">' . number_format($min_price) . '円〜' . number_format($max_price)  . '円</span>';
+                } else {
+                    echo '<span class="normal-price">' . number_format($min_price) . '円〜' . number_format($max_price) . '円</span>';
+                }
+		    }
 	    }
 	?>
 	</div>
-    <div class="catchphrase"><span><?=$plan[0][catchphrase]?></span></div>
+    <div class="catchphrase"><span><?=$plan[0]['catchphrase']?></span></div>
 	<div class="picture">
         <ul class="slider thumb-item">
-	<?php 
+	<?php
 	    for ($i = 1; $i <= 10; $i++) {
          	$index_name = "file_path" . $i;
-		if ($plan[0][$index_name]) {
-	            echo "<li><img src='/public/uploads/{$plan[0][$index_name]}' alt=></li>";
-		}
+            if ($plan[0][$index_name]) {
+                    echo "<li><img src='/public/uploads/{$plan[0][$index_name]}' alt=></li>";
             }
+        }
 	?>
         </ul>
         <ul class="slider thumb-item-nav">
-	<?php 
+	<?php
 	    $img_count = 0;
 	    for ($i = 1; $i <= 10; $i++) {
          	$index_name = "file_path" . $i;
@@ -260,7 +263,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 	</div>
 	<div class="calendar">
         <span id="anchor-calendar">空き状況</span>
-        <div class="calendar_container"> 
+        <div class="calendar_container">
         	<p>参加出発希望日を選択し、詳細を確認して申し込みを行ってください。</p>
         	<div class="flex-calendar">
             <p><i class="prev-month fas fa-arrow-alt-circle-left"></i></p>
@@ -269,7 +272,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                     <tr>
                     	<th class="year-text" colspan="7">
                     	<?php
-                    	foreach ($stocks[dates] as $date) {
+                    	foreach ($stocks['dates'] as $date) {
                   		    $current_date = new DateTime(substr($date, 0, 10));
                   		    $y = (int)$current_date->format('Y');
                   		    $m = $current_date->format('m');
@@ -282,7 +285,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                     	</th>
                     </tr>
                     <tr>
-                       <?php 
+                       <?php
                        foreach (['日', '月', '火', '水', '木', '金', '土'] as $dayOfWeek) {
                        	echo '<th class="bg-light text-center">' . $dayOfWeek . '</th>';
                        }
@@ -292,7 +295,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                 <tbody>
                 	<?php
                 	$week = ['日', '月', '火', '水', '木', '金', '土'];
-                	foreach ($stocks[dates] as $date) {
+                	foreach ($stocks['dates'] as $date) {
                 		$current_date = new DateTime(substr($date, 0, 10));
                 		$w = (int)$current_date->format('w');
                 		$d = $current_date->format('j');
@@ -300,27 +303,27 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                 	    	echo '<tr>';
                 	    }
                 	    $count = 0;
-                	    foreach ($stocks[stocks] as $stock) {
-                	    	if ($current_date->format('Y-m-d') == $stock[res_date] && $stock[is_active] == 1) {
+                	    foreach ($stocks['stocks'] as $stock) {
+                	    	if ($current_date->format('Y-m-d') == $stock['res_date'] && $stock[is_active] == 1) {
 					// 現在時刻
 					$now = new DateTime();
 			                // 受付開始日計算
 			                $time1 = sprintf('%02d', $plan[0][res_before_time]);
-			                $res_before_datetime = new DateTime($stock[res_date] . " " . $time1 . ":00");
+			                $res_before_datetime = new DateTime($stock['res_date'] . " " . $time1 . ":00");
 			                $res_before_datetime = $res_before_datetime->modify('-' . $plan[0][res_before_day]. ' day')->format('Y-m-d H:i');
 			                //////
 			                //// 受付締切日計算（即時予約）
 			                $time2 = sprintf('%02d', $plan[0][res_end_time]);
-			                $res_end_datetime = new DateTime($stock[res_date] . " " . $time2 . ":00");
+			                $res_end_datetime = new DateTime($stock['res_date'] . " " . $time2 . ":00");
 			                $res_end_datetime = $res_end_datetime->modify('-' . ($plan[0][res_end_day]) . ' day');
 			                //////
 			                //// 受付締切日計算（リクエスト予約）
 			                $time3 = sprintf('%02d', $plan[0][req_before_time]);
-			                $req_before_datetime = new DateTime($stock[res_date] . " " . $time3 . ":00");
+			                $req_before_datetime = new DateTime($stock['res_date'] . " " . $time3 . ":00");
 			                $req_before_datetime = $req_before_datetime->modify('-' . ($plan[0][req_before_day]) . ' day');
 			                ////
-                	    		//if ($stock[res_type] == 0 && $stock[res_date] > date("Y-m-d")) {
-                	    		if ($stock[res_type] == 0 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		//if ($stock[res_type] == 0 && $stock['res_date'] > date("Y-m-d")) {
+                	    		if ($stock[res_type] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
                                             if ($stock[limit_number] > 0) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
@@ -332,15 +335,15 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 					    $count++;
                 	    		} else if ($stock[res_type] == 1) {
                 	    		    echo '<td>' . $d . '<br />';
-                	    		    if ($stock[limit_number] > 0 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		    if ($stock[limit_number] > 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
-                	    		    } else if ($stock[limit_number] == 0 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		    } else if ($stock[limit_number] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
                 	    		    } else {
                    	                        echo '-';
                 	    		    }
 					    $count++;
-                	    		} else if ($stock[res_type] == 2 && $stock[res_date] >= date("Y-m-d")  && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		} else if ($stock[res_type] == 2 && $stock['res_date'] >= date("Y-m-d")  && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
                                             echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
 					    $count++;
@@ -366,7 +369,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                     <tr>
                     	<th class="year-text" colspan="7">
                     	<?php
-                    	foreach ($stocks_next[dates] as $date_next) {
+                    	foreach ($stocks_next['dates'] as $date_next) {
                   		    $current_date = new DateTime(substr($date_next, 0, 10));
                   		    $y = (int)$current_date->format('Y');
                   		    $m = $current_date->format('m');
@@ -379,7 +382,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                     	</th>
                     </tr>
                     <tr>
-                       <?php 
+                       <?php
                        foreach (['日', '月', '火', '水', '木', '金', '土'] as $dayOfWeek) {
                        	echo '<th class="bg-light text-center">' . $dayOfWeek . '</th>';
                        }
@@ -389,7 +392,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                 <tbody>
                 	 <?php
                 	$week = ['日', '月', '火', '水', '木', '金', '土'];
-                	foreach ($stocks_next[dates] as $date) {
+                	foreach ($stocks_next['dates'] as $date) {
                 		$current_date = new DateTime(substr($date, 0, 10));
 				//$current_date = $current_date->modify("-1 months");
                 		$w = (int)$current_date->format('w');
@@ -398,27 +401,27 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                 	    	echo '<tr>';
                 	    }
                 	    $count = 0;
-                	    foreach ($stocks[stocks] as $stock) {
-                	    	if ($current_date->format('Y-m-d') == $stock[res_date] && $stock[is_active] == 1) {
+                	    foreach ($stocks['stocks'] as $stock) {
+                	    	if ($current_date->format('Y-m-d') == $stock['res_date'] && $stock[is_active] == 1) {
 					// 現在時刻
 					$now = new DateTime();
 			                // 受付開始日計算
 			                $time1 = sprintf('%02d', $plan[0][res_before_time]);
-			                $res_before_datetime = new DateTime($stock[res_date] . " " . $time1 . ":00");
+			                $res_before_datetime = new DateTime($stock['res_date'] . " " . $time1 . ":00");
 			                $res_before_datetime = $res_before_datetime->modify('-' . $plan[0][res_before_day]. ' day')->format('Y-m-d H:i');
 			                //////
 			                //// 受付締切日計算（即時予約）
 			                $time2 = sprintf('%02d', $plan[0][res_end_time]);
-			                $res_end_datetime = new DateTime($stock[res_date] . " " . $time2 . ":00");
+			                $res_end_datetime = new DateTime($stock['res_date'] . " " . $time2 . ":00");
 			                $res_end_datetime = $res_end_datetime->modify('-' . ($plan[0][res_end_day]) . ' day');
 			                //////
 			                //// 受付締切日計算（リクエスト予約）
 			                $time3 = sprintf('%02d', $plan[0][req_before_time]);
-			                $req_before_datetime = new DateTime($stock[res_date] . " " . $time3 . ":00");
+			                $req_before_datetime = new DateTime($stock['res_date'] . " " . $time3 . ":00");
 			                $req_before_datetime = $req_before_datetime->modify('-' . ($plan[0][req_before_day]) . ' day');
 			                ////
-                	    		//if ($stock[res_type] == 0 && $stock[res_date] > date("Y-m-d")) {
-                	    		if ($stock[res_type] == 0 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		//if ($stock[res_type] == 0 && $stock['res_date'] > date("Y-m-d")) {
+                	    		if ($stock[res_type] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
                                             if ($stock[limit_number] > 0) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
@@ -430,15 +433,15 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
 					    $count++;
                 	    		} else if ($stock[res_type] == 1) {
                 	    		    echo '<td>' . $d . '<br />';
-                	    		    if ($stock[limit_number] > 0 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
+                	    		    if ($stock[limit_number] > 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $res_end_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">○</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
-                	    		    } else if ($stock[limit_number] == 0 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		    } else if ($stock[limit_number] == 0 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    	echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
                 	    		    } else {
                    	                        echo '-';
                 	    		    }
 					    $count++;
-                	    		} else if ($stock[res_type] == 2 && $stock[res_date] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
+                	    		} else if ($stock[res_type] == 2 && $stock['res_date'] >= date("Y-m-d") && date("Y-m-d H:i") >= $res_before_datetime && $now <= $req_before_datetime) {
                 	    		    echo '<td>' . $d . '<br />';
                                             echo '<a class="selected-date" style="cursor:pointer;">□</a><input type="hidden" value="' . $current_date->format('Y-m-d') . '">';
 					    $count++;
@@ -480,7 +483,7 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                       <td class="price-cell"></td>
                       <td><button class="reserve-button">予約へ進む</button></td>
                     </tr>
-                </table>            
+                </table>
             </div>
 
             <p>空き状況： <a>○</a> 即時予約可 / <a>□</a> リクエスト予約可 / × 空きなし / － 受付対象外</p>
@@ -492,21 +495,21 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
             <table>
             	<p class="table-comment">支払い方法、キャンセルについて</p>
                 <tr>
-                  <th>お支払方法</th><td><?php if ($plan[0][spot] == 1) {
+                  <th>お支払方法</th><td><?php if ($plan[0]['spot'] == 1) {
                       echo '現地払い<br />';
                   }
-		  if ($plan[0][prepay] == 1) {
+		  if ($plan[0]['prepay'] == 1) {
                       echo '事前払い<br />';
                   }
-		  if ($plan[0][cvs] == 1) {
+		  if ($plan[0]['cvs'] == 1) {
                       echo '事前コンビニ決済<br />';
                   }
-		  if ($plan[0][card] == 1) {
+		  if ($plan[0]['card'] == 1) {
                       echo '事前クレジットカード決済<br/ >';
                   } ?></td>
                 </tr>
                 <tr>
-                  <th>お支払い方法の補足・詳細</th><td><?=$plan[0][payment_comment]?></td>
+                  <th>お支払い方法の補足・詳細</th><td><?=$plan[0]['payment_comment']?></td>
                 </tr>
                 <tr>
                   <th>キャンセル締切</th><td>旅行および体験の1日前の17:00まで</td>
@@ -528,20 +531,20 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
             <label class="tab_item" for="tab3">注意事項・その他</label>
             <div class="tab_content" id="tab1_content">
               <div class="tab_content_description">
-                <p class="description-title"><?=$plan[0][name]?></p>
-                <p class="content"><?=$plan[0][description]?></p>
+                <p class="description-title"><?=$plan[0]['name']?></p>
+                <p class="content"><?=$plan[0]['description']?></p>
                 <table>
                     <tr>
-                      <th>開催期間</th><td><?=date('Y年n月j日', strtotime($plan[0][start_day]))?>〜<?=date('Y年n月j日', strtotime($plan[0][end_day]))?></td>
+                      <th>開催期間</th><td><?=date('Y年n月j日', strtotime($plan[0]['start_day']))?>〜<?=date('Y年n月j日', strtotime($plan[0]['end_day']))?></td>
                     </tr>
                     <tr>
-                      <th>所要時間</th><td><?=$plan[0][time_hour]?>時間<?=$plan[0][time_minute]?>分</td>
+                      <th>所要時間</th><td><?=$plan[0]['time_hour']?>時間<?=$plan[0]['time_minute']?>分</td>
                     </tr>
                     <tr>
-                      <th>料金に含まれるもの</th><td><?=$plan[0][included_item]?></td>
+                      <th>料金に含まれるもの</th><td><?=$plan[0]['included_item']?></td>
                     </tr>
                     <tr>
-                      <th>1予約あたりの予約可能人数</th><td><?=$plan[0][min_number]?>人〜<?=$plan[0][max_number]?>人</td>
+                      <th>1予約あたりの予約可能人数</th><td><?=$plan[0]['min_number']?>人〜<?=$plan[0]['max_number']?>人</td>
                     </tr>
                 </table>
               </div>
@@ -552,15 +555,15 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                     <tr>
                       <th>集合場所</th>
                          <td><?php
-                      	  if ($plan[0][meeting_point_flag] == 0) {
-                      	  	  echo $plan[0][place_name] . '<br />〒' . $plan[0][place_postalcode] . '<br />' . $plan[0][place_prefecture] . $plan[0][place_address] . '<br />' . $plan[0][place_access];
-                              echo '<input type="hidden" id="lat" value="' . $plan[0][place_latitude] . '">';
-                              echo '<input type="hidden" id="lng" value="' . $plan[0][place_longitude] . '">';
-                              echo '<div id="map-wrapper"><div id="map-canvas"></div></div>';                      	  	  
-                      	  } else if ($plan[0][meeting_point_flag] == 1){
-                              echo $plan[0][meeting_point_name] . '<br />〒' . $plan[0][meeting_point_postalcode] . '<br />' . $plan[0][meeting_point_prefecture] . $plan[0][meeting_point_address] . '<br />' . $plan[0][meeting_point_access];
-                              echo '<input type="hidden" id="lat" value="' . $plan[0][meeting_point_latitude] . '">';
-                              echo '<input type="hidden" id="lng" value="' . $plan[0][meeting_point_longitude] . '">';
+                      	  if ($plan[0]['meeting_point_flag'] == 0) {
+                      	  	  echo $plan[0]['place_name'] . '<br />〒' . $plan[0]['place_postalcode'] . '<br />' . $plan[0]['place_prefecture'] . $plan[0]['place_address'] . '<br />' . $plan[0]['place_access'];
+                              echo '<input type="hidden" id="lat" value="' . $plan[0]['place_latitude'] . '">';
+                              echo '<input type="hidden" id="lng" value="' . $plan[0]['place_longitude'] . '">';
+                              echo '<div id="map-wrapper"><div id="map-canvas"></div></div>';
+                      	  } else if ($plan[0]['meeting_point_flag'] == 1){
+                              echo $plan[0]['meeting_point_name'] . '<br />〒' . $plan[0]['meeting_point_postalcode'] . '<br />' . $plan[0]['meeting_point_prefecture'] . $plan[0]['meeting_point_address'] . '<br />' . $plan[0]['meeting_point_access'];
+                              echo '<input type="hidden" id="lat" value="' . $plan[0]['meeting_point_latitude'] . '">';
+                              echo '<input type="hidden" id="lng" value="' . $plan[0]['meeting_point_longitude'] . '">';
                               echo '<div id="map-wrapper"><div id="map-canvas"></div></div>';
                       	  } else {
                       	  	  echo '-';
@@ -568,9 +571,9 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
                       	  ?></td>
                     </tr>
                     <tr>
-                      <th>体験場所</th><td><?=$plan[0][place_name]?><br />〒<?=$plan[0][place_postalcode]?><br /><?=$plan[0][place_prefecture]?><?=$plan[0][place_address]?><br /><?=$plan[0][place_access]?><br /><?php
-                              echo '<input type="hidden" id="lat2" value="' . $plan[0][place_latitude] . '">';
-                              echo '<input type="hidden" id="lng2" value="' . $plan[0][place_longitude] . '">';
+                      <th>体験場所</th><td><?=$plan[0]['place_name']?><br />〒<?=$plan[0]['place_postalcode']?><br /><?=$plan[0]['place_prefecture']?><?=$plan[0]['place_address']?><br /><?=$plan[0]['place_access']?><br /><?php
+                              echo '<input type="hidden" id="lat2" value="' . $plan[0]['place_latitude'] . '">';
+                              echo '<input type="hidden" id="lng2" value="' . $plan[0]['place_longitude'] . '">';
                               echo '<div id="map-wrapper"><div id="map-canvas2"></div></div>';?></td>
                     </tr>
                 </table>
@@ -580,16 +583,16 @@ html{font-size:93.75%;}a,.page-title{color:#0274be;}a:hover,a:focus{color:#3a3a3
               <div class="tab_content_description">
                 <table>
                     <tr>
-                      <th>対象年齢</th><td><?=$plan[0][age_from]?>歳〜<?=$plan[0][age_to]?>歳</td>
+                      <th>対象年齢</th><td><?=$plan[0]['age_from']?>歳〜<?=$plan[0]['age_to']?>歳</td>
                     </tr>
                     <tr>
-                      <th>服装</th><td><?=$plan[0][item]?></td>
+                      <th>服装</th><td><?=$plan[0]['item']?></td>
                     </tr>
                     <tr>
-                      <th>持ち物</th><td><?=$plan[0][wear]?></td>
+                      <th>持ち物</th><td><?=$plan[0]['wear']?></td>
                     </tr>
                     <tr>
-                      <th>注意事項・その他</th><td><?=$plan[0][caution_content]?></td>
+                      <th>注意事項・その他</th><td><?=$plan[0]['caution_content']?></td>
                     </tr>
                 </table>
               </div>
@@ -794,7 +797,7 @@ input[name="tab_item"] {
     position: relative;
     margin:auto;
 }
- 
+
 #map-canvas,
 #map-canvas2 {
     position: absolute;
@@ -871,7 +874,7 @@ input[name="tab_item"] {
 }
 #tab3_content td {
     max-width: 600px;
-    word-break: break-all;    
+    word-break: break-all;
 }
 
 @media screen and (max-width: 767px) {
@@ -918,17 +921,17 @@ if (document.getElementById('lat') && document.getElementById('lng')) {
     var lat = document.getElementById('lat'),
         lng = document.getElementById('lng'),
         latlng = new google.maps.LatLng(lat.value, lng.value);
-    
+
     var opt = {
         zoom: 15,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scaleControl: true
     };
-    
+
     var map = new google.maps.Map( document.getElementById('map-canvas'), opt);
     map.setCenter( latlng );
-    
+
     var marker = new google.maps.Marker({
         position: latlng,
         map: map
