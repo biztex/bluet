@@ -17,7 +17,7 @@
     <form method="post" name="form" action="/client/reservations/destroy-selected">
       @csrf
       <input type="hidden" name="ids">
-      <button type="submit" id="delete-selected" class="btn btn-secondary float-right" onClick="return confirmDeleteSelected()" >選択データを削除</button>　
+      <button type="submit" id="delete-selected" class="btn btn-secondary float-right" onClick="return confirmDeleteSelected()" >選択データを削除</button>
     </form>
   </div>
 </div>
@@ -47,7 +47,7 @@ new gridjs.Grid ({
     }
   },
   columns: [
-    { 
+    {
       id: 'id',
       name: gridjs.html('<span class="select-items">全選択/解除</span>'),
       width: '0px',
@@ -58,7 +58,7 @@ new gridjs.Grid ({
         </div>
       `),
     },
-    { 
+    {
       name: 'ID',
       sort: {
         enabled: true
@@ -70,13 +70,13 @@ new gridjs.Grid ({
         </div>
       `)
     },
-    '予約番号','予約状況',' 名前','プラン名','予約受付日時', '決済方法',
-    { 
+    '予約番号','予約状況',' 名前','プラン名','予約受付日時', '予約確定日時', '決済方法',
+    {
       name: 'データ操作',
       sort: false,
         formatter: (_, row) => gridjs.html(`
           <div class="row">
-            <a href="/client/reservations/edit/${row.cells[1].data}" class="btn btn-warning btn-sm">編集</a>　
+            <a href="/client/reservations/edit/${row.cells[1].data}" class="btn btn-warning btn-sm">編集</a>
             <form method="post" name="form" action="/client/reservations/destroy/${row.cells[1].data}">
               @csrf
               <button type="submit" class="btn btn-danger btn-sm" onClick="return confirmDelete()">削除</button>
@@ -87,10 +87,10 @@ new gridjs.Grid ({
   ],
   server: {
     url: '/client/reservations/json',
-    then: data => data.map(data => 
-      ['', data.id, data.order_id, data.status, data.user.name_last + ' ' + data.user.name_first, data.plan.name.slice(0, 10), data.created_at.slice(0, 10), displayPaymentMethod(data.payment_method)]
+    then: data => data.map(data =>
+      ['', data.id, data.order_id, data.status, data.user.name_last + ' ' + data.user.name_first, data.plan.name.slice(0, 10), data.created_at.slice(0, 10), data.fixed_datetime.slice(0, 10), displayPaymentMethod(data.payment_method)]
     )
-  } 
+  }
 }).render(document.getElementById('result'));
 
 

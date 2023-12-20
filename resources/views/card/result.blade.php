@@ -1,5 +1,18 @@
 @extends('layouts.parents')
 @section('title', 'ブルーツーリズム北海道 - カード決済結果')
+
+@section('translation')
+<div id="glang">
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
+@endsection
+
 @section('content')
     <div class="px-3 py-3 pt-md-5 mx-auto text-center">
         <ul class="list-unstyled">
