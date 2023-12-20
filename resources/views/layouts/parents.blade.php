@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/template.css">
 </head>
 <body class="bg-light">
+    @yield('translation')
     <div class="header">
         <img src="{{asset('img/logo.png')}}" alt="BlueTourismHokkaido" width="200">
     </div>
