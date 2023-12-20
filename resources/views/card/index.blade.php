@@ -1,5 +1,18 @@
 @extends('layouts.parents')
 @section('title', 'ブルーツーリズム北海道 - クレジットカード決済')
+
+@section('translation')
+<div id="glang">
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
@@ -36,7 +49,7 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
 }else{
     $Number_of_reservations = json_decode($reservation->Number_of_reservations);
         foreach($reservation->plan->prices as $i => $price) {
-            if(array_key_exists(sprintf('type%d_number', $price->price_types->number), $Number_of_reservations)){
+            if(array_key_exists(sprintf('type%d_number', $price->price_types->number), json_decode($reservation->Number_of_reservations, true))){
                 echo '<li class="list-group-item d-flex justify-content-between">';
                 echo '<div>';
                 echo '<h6 class="my-0">';
