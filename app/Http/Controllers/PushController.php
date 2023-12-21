@@ -26,6 +26,10 @@ class PushController extends Controller
 
     public function mpi(Request $request)
     {
+        if ($request->has('lang')) {
+            app()->setLocale($request->lang);
+        }
+
         $logger = Log::channel('tgmdk')->getLogger();
         if ($logger instanceof LoggerInterface) {
             TGMDK_Logger::setLogger($logger);
@@ -78,129 +82,129 @@ class PushController extends Controller
                         foreach ($reservation->plan->prices as $price) {
                             if ($reservation->type0_number && $price->type == 0) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type0_number * $price->price; 
+                                    $amount += $reservation->type0_number * $price->price;
                             } else {
-                                        $amount += $reservation->type0_number * $price->{$weekday}; 
+                                        $amount += $reservation->type0_number * $price->{$weekday};
                             }
                             } else if ($reservation->type1_number && $price->type == 1) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type1_number * $price->price; 
+                                    $amount += $reservation->type1_number * $price->price;
                             } else {
-                                        $amount += $reservation->type1_number * $price->{$weekday}; 
+                                        $amount += $reservation->type1_number * $price->{$weekday};
                             }
                             } else if ($reservation->type2_number && $price->type == 2) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type2_number * $price->price; 
+                                    $amount += $reservation->type2_number * $price->price;
                             } else {
-                                        $amount += $reservation->type2_number * $price->{$weekday}; 
+                                        $amount += $reservation->type2_number * $price->{$weekday};
                             }
                             } else if ($reservation->type3_number && $price->type == 3) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type3_number * $price->price; 
+                                    $amount += $reservation->type3_number * $price->price;
                             } else {
-                                        $amount += $reservation->type3_number * $price->{$weekday}; 
+                                        $amount += $reservation->type3_number * $price->{$weekday};
                             }
                             } else if ($reservation->type4_number && $price->type == 4) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type4_number * $price->price; 
+                                    $amount += $reservation->type4_number * $price->price;
                             } else {
-                                        $amount += $reservation->type4_number * $price->{$weekday}; 
+                                        $amount += $reservation->type4_number * $price->{$weekday};
                             }
                             } else if ($reservation->type5_number && $price->type == 5) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type5_number * $price->price; 
+                                    $amount += $reservation->type5_number * $price->price;
                             } else {
-                                        $amount += $reservation->type5_number * $price->{$weekday}; 
+                                        $amount += $reservation->type5_number * $price->{$weekday};
                             }
                             } else if ($reservation->type6_number && $price->type == 6) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type6_number * $price->price; 
+                                    $amount += $reservation->type6_number * $price->price;
                             } else {
-                                        $amount += $reservation->type6_number * $price->{$weekday}; 
+                                        $amount += $reservation->type6_number * $price->{$weekday};
                             }
                             } else if ($reservation->type7_number && $price->type == 7) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type7_number * $price->price; 
+                                    $amount += $reservation->type7_number * $price->price;
                             } else {
-                                        $amount += $reservation->type7_number * $price->{$weekday}; 
+                                        $amount += $reservation->type7_number * $price->{$weekday};
                             }
                             } else if ($reservation->type8_number && $price->type == 8) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type8_number * $price->price; 
+                                    $amount += $reservation->type8_number * $price->price;
                             } else {
-                                        $amount += $reservation->type8_number * $price->{$weekday}; 
+                                        $amount += $reservation->type8_number * $price->{$weekday};
                             }
                             } else if ($reservation->type9_number && $price->type == 9) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type9_number * $price->price; 
+                                    $amount += $reservation->type9_number * $price->price;
                             } else {
-                                        $amount += $reservation->type9_number * $price->{$weekday}; 
+                                        $amount += $reservation->type9_number * $price->{$weekday};
                             }
                             } else if ($reservation->type10_number && $price->type == 10) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type10_number * $price->price; 
+                                    $amount += $reservation->type10_number * $price->price;
                             } else {
-                                        $amount += $reservation->type10_number * $price->{$weekday}; 
+                                        $amount += $reservation->type10_number * $price->{$weekday};
                             }
                             } else if ($reservation->type11_number && $price->type == 11) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type11_number * $price->price; 
+                                    $amount += $reservation->type11_number * $price->price;
                             } else {
-                                        $amount += $reservation->type11_number * $price->{$weekday}; 
+                                        $amount += $reservation->type11_number * $price->{$weekday};
                             }
                             } else if ($reservation->type12_number && $price->type == 12) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type12_number * $price->price; 
+                                    $amount += $reservation->type12_number * $price->price;
                             } else {
-                                        $amount += $reservation->type12_number * $price->{$weekday}; 
+                                        $amount += $reservation->type12_number * $price->{$weekday};
                             }
                             } else if ($reservation->type13_number && $price->type == 13) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type13_number * $price->price; 
+                                    $amount += $reservation->type13_number * $price->price;
                             } else {
-                                        $amount += $reservation->type13_number * $price->{$weekday}; 
+                                        $amount += $reservation->type13_number * $price->{$weekday};
                             }
                             } else if ($reservation->type14_number && $price->type == 14) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type14_number * $price->price; 
+                                    $amount += $reservation->type14_number * $price->price;
                             } else {
-                                        $amount += $reservation->type14_number * $price->{$weekday}; 
+                                        $amount += $reservation->type14_number * $price->{$weekday};
                             }
                             } else if ($reservation->type15_number && $price->type == 15) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type15_number * $price->price; 
+                                    $amount += $reservation->type15_number * $price->price;
                             } else {
-                                        $amount += $reservation->type15_number * $price->{$weekday}; 
+                                        $amount += $reservation->type15_number * $price->{$weekday};
                             }
                             } else if ($reservation->type16_number && $price->type == 16) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type16_number * $price->price; 
+                                    $amount += $reservation->type16_number * $price->price;
                             } else {
-                                        $amount += $reservation->type16_number * $price->{$weekday}; 
+                                        $amount += $reservation->type16_number * $price->{$weekday};
                             }
                             } else if ($reservation->type17_number && $price->type == 17) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type17_number * $price->price; 
+                                    $amount += $reservation->type17_number * $price->price;
                             } else {
-                                        $amount += $reservation->type17_number * $price->{$weekday}; 
+                                        $amount += $reservation->type17_number * $price->{$weekday};
                             }
                             } else if ($reservation->type18_number && $price->type == 18) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type18_number * $price->price; 
+                                    $amount += $reservation->type18_number * $price->price;
                             } else {
-                                        $amount += $reservation->type18_number * $price->{$weekday}; 
+                                        $amount += $reservation->type18_number * $price->{$weekday};
                             }
                             } else if ($reservation->type19_number && $price->type == 19) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type19_number * $price->price; 
+                                    $amount += $reservation->type19_number * $price->price;
                             } else {
-                                        $amount += $reservation->type19_number * $price->{$weekday}; 
+                                        $amount += $reservation->type19_number * $price->{$weekday};
                             }
                             } else if ($reservation->type20_number && $price->type == 20) {
                                 if ($price->week_flag == 0) {
-                                    $amount += $reservation->type20_number * $price->price; 
+                                    $amount += $reservation->type20_number * $price->price;
                             } else {
-                                        $amount += $reservation->type20_number * $price->{$weekday}; 
+                                        $amount += $reservation->type20_number * $price->{$weekday};
                             }
                             }
                         }

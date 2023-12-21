@@ -161,6 +161,24 @@ class ReservationsController extends Controller
         }
         $this->validate($request, $rules);
 
+        // Check user's language
+        switch ($request->lang) {
+            case 'English':
+                app()->setLocale('en');
+                break;
+            case 'Korean':
+                app()->setLocale('ko');
+                break;
+            case 'Chinese Simplified':
+                app()->setLocale('zh_CN');
+                break;
+            case 'Chinese Traditional':
+                app()->setLocale('zh_TW');
+                break;
+            default:
+                app()->setLocale('ja');
+        }
+
         // 会員追加
         //if ($request->is_member == 1) {
         $user = User::where('email', $request->email)->first();
@@ -442,9 +460,9 @@ class ReservationsController extends Controller
                 // 予約者へメール通知
                 Mail::send(['text' => 'user.reservations.prepayemail'], [
                     "number" => $reservation->order_id,
-                    "plan" => $reservation->plan->name,
+                    "plan" => $request->plan_name,
                     "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                    "activity" => $reservation->activity_date,
+                    "activity" => $request->activity_name,
                     "name_last" => $request->name_last,
                     "name_first" => $request->name_first,
                     "email" => $request->email,
@@ -506,9 +524,9 @@ class ReservationsController extends Controller
                 // 予約者へメール通知
                 Mail::send(['text' => 'user.reservations.spotemail'], [
                     "number" => $reservation->order_id,
-                    "plan" => $reservation->plan->name,
+                    "plan" => $request->plan_name,
                     "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                    "activity" => $reservation->activity_date,
+                    "activity" => $request->activity_name,
                     "name_last" => $request->name_last,
                     "name_first" => $request->name_first,
                     "email" => $request->email,
@@ -570,9 +588,9 @@ class ReservationsController extends Controller
             // リクエスト予約者へメール通知
             Mail::send(['text' => 'user.reservations.reqemail'], [
                 "number" => $reservation->order_id,
-                "plan" => $plan->name,
+                "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($request->date)),
-                "activity" => $request->selected_activity,
+                "activity" => $request->activity_name,
                 "name_last" => $request->name_last,
                 "name_first" => $request->name_first,
                 "email" => $request->email,
@@ -887,9 +905,9 @@ class ReservationsController extends Controller
         if ($pm == 0) { // 現地前払い
             Mail::send(['text' => 'user.reservations.spotemail'], [
                 "number" => $reservation->order_id,
-                "plan" => $reservation->plan->name,
+                "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $reservation->activity_date,
+                "activity" => $request->activity_name,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -912,9 +930,9 @@ class ReservationsController extends Controller
         } else if ($pm == 1) { // 事前払い
             Mail::send(['text' => 'user.reservations.prepayemail'], [
                 "number" => $reservation->order_id,
-                "plan" => $reservation->plan->name,
+                "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $reservation->activity_date,
+                "activity" => $request->activity_name,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -938,9 +956,9 @@ class ReservationsController extends Controller
             Mail::send(['text' => 'user.reservations.cvsemail'], [
                 "url_cvs" => 'https://blue.zenryo-ec.info/pay?prm=' . encrypt($param_cvs),
                 "number" => $reservation->order_id,
-                "plan" => $reservation->plan->name,
+                "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $reservation->activity_date,
+                "activity" => $request->activity_name,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -962,9 +980,9 @@ class ReservationsController extends Controller
             Mail::send(['text' => 'user.reservations.cardemail'], [
                 "url_card" => 'https://blue.zenryo-ec.info/pay?prm=' . encrypt($param_card),
                 "number" => $reservation->order_id,
-                "plan" => $reservation->plan->name,
+                "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $reservation->activity_date,
+                "activity" => $request->activity_name,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -2020,9 +2038,9 @@ class ReservationsController extends Controller
             // 予約者へメール通知
             Mail::send(['text' => 'user.reservations.email'], [
                 "number" => $reservation->order_id,
-                "plan" => $reservation->plan->name,
+                "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $reservation->activity_date,
+                "activity" => $request->activity_name,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,

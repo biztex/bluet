@@ -6,7 +6,7 @@
     <div id="google_translate_element"></div>
     <script type="text/javascript">
     function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
     }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -23,7 +23,7 @@
             <ul class="list-group mb-3">
                 <li class="list-group-item d-flex justify-content-between">
                     <div>
-                        <h6 class="my-0"><strong>プラン名：{{ $reservation->plan->name }}</strong></h6>
+                        <h6 class="my-0"><strong>プラン名：<span id="plan-title">{{ $reservation->plan->name }}</span></strong></h6>
                     </div>
                 </li>
 @php
@@ -96,8 +96,14 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
 -->
             </div>
             <hr class="mb-4">
-            <form method="post" action="{{ url('/cvs') }}" class="needs-validation" novalidate>
+            <form id="reservation-form" method="post" action="{{ url('/cvs') }}" class="needs-validation" novalidate>
                 @csrf
+
+                <input type="hidden" id="lang" name="lang" value="Japanese" />
+                <input type="hidden" id="plan_name" name="plan_name" value="" />
+                <input type="hidden" id="activity_name" name="activity_name" value="" />
+                <p id="selected_activity" class="d-none">{{ $reservation->activity_date }}</p>
+
                 <div class="mb-3">
                     <label for="orderId">予約番号</label>
                     <div class="row">
@@ -171,4 +177,24 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
         </div>
 
     </div>
+
+    <script>
+        document.getElementById('reservation-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // inject lang
+            let lang = document.getElementById('glang').querySelector('span a span').textContent.replace(/[^a-zA-Z ]/g, "");
+            document.getElementById('lang').value = lang;
+
+            // inject plan name
+            let planName = document.getElementById('plan-title').textContent;
+            document.getElementById('plan_name').value = planName;
+
+            // inject activity name
+            let activityName = document.getElementById('selected_activity').textContent;
+            document.getElementById('activity_name').value = activityName;
+
+            this.submit();
+        });
+    </script>
 @endsection
