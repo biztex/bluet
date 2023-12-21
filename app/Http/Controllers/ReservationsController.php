@@ -161,22 +161,9 @@ class ReservationsController extends Controller
         }
         $this->validate($request, $rules);
 
-        // Check user's language
-        switch ($request->lang) {
-            case 'English':
-                app()->setLocale('en');
-                break;
-            case 'Korean':
-                app()->setLocale('ko');
-                break;
-            case 'Chinese Simplified':
-                app()->setLocale('zh_CN');
-                break;
-            case 'Chinese Traditional':
-                app()->setLocale('zh_TW');
-                break;
-            default:
-                app()->setLocale('ja');
+        // Set locale to user's language
+        if ($request->has('lang')) {
+            app()->setLocale($request->lang);
         }
 
         // 会員追加

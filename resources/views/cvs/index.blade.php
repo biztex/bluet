@@ -99,7 +99,7 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
             <form id="reservation-form" method="post" action="{{ url('/cvs') }}" class="needs-validation" novalidate>
                 @csrf
 
-                <input type="hidden" id="lang" name="lang" value="Japanese" />
+                <input type="hidden" id="lang" name="lang" value="ja" />
                 <input type="hidden" id="plan_name" name="plan_name" value="" />
                 <input type="hidden" id="activity_name" name="activity_name" value="" />
                 <p id="selected_activity" class="d-none">{{ $reservation->activity_date }}</p>
@@ -179,12 +179,25 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
     </div>
 
     <script>
+        function readCookie(name) {
+            var c = document.cookie.split('; '),
+            cookies = {}, i, C;
+
+            for (i = c.length - 1; i >= 0; i--) {
+                C = c[i].split('=');
+                cookies[C[0]] = C[1];
+            }
+
+            return cookies[name];
+        }
+
         document.getElementById('reservation-form').addEventListener('submit', function (event) {
             event.preventDefault();
 
             // inject lang
-            let lang = document.getElementById('glang').querySelector('span a span').textContent.replace(/[^a-zA-Z ]/g, "");
-            document.getElementById('lang').value = lang;
+            if (readCookie('googtrans')) {
+                document.getElementById('lang').value = readCookie('googtrans').substring(4);
+            }
 
             // inject plan name
             let planName = document.getElementById('plan-title').textContent;

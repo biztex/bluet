@@ -38,7 +38,7 @@
     @endif
     <form id="reservation-form" action="{{ url('reservations/store') }}" method="post">
     @csrf
-    <input type="hidden" id="lang" name="lang" value="Japanese" />
+    <input type="hidden" id="lang" name="lang" value="ja" />
     <input type="hidden" id="plan_name" name="plan_name" value="" />
     <input type="hidden" id="activity_name" name="activity_name" value="" />
 
@@ -558,12 +558,25 @@ $('input[name="area"]').change(function() {
     }
 });
 
+function readCookie(name) {
+    var c = document.cookie.split('; '),
+    cookies = {}, i, C;
+
+    for (i = c.length - 1; i >= 0; i--) {
+        C = c[i].split('=');
+        cookies[C[0]] = C[1];
+     }
+
+     return cookies[name];
+}
+
 document.getElementById('reservation-form').addEventListener('submit', function (event) {
     event.preventDefault();
 
     // inject lang
-    let lang = document.getElementById('glang').querySelector('span a span').textContent.replace(/[^a-zA-Z ]/g, "");
-    document.getElementById('lang').value = lang;
+    if (readCookie('googtrans')) {
+        document.getElementById('lang').value = readCookie('googtrans').substring(4);
+    }
 
     // inject plan name
     let planName = document.getElementById('plan-title').textContent;
