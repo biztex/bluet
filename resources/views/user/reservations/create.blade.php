@@ -575,7 +575,7 @@ document.getElementById('reservation-form').addEventListener('submit', function 
 
     // inject lang
     if (readCookie('googtrans')) {
-        document.getElementById('lang').value = readCookie('googtrans').substring(4);
+        document.getElementById('lang').value = readCookie('googtrans').substring(4).replace('-', '_');
     }
 
     // inject plan name

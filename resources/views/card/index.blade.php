@@ -187,7 +187,7 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
 
             // inject lang
             if (readCookie('googtrans')) {
-                document.getElementById('lang').value = readCookie('googtrans').substring(4);
+                document.getElementById('lang').value = readCookie('googtrans').substring(4).replace('-', '_');
             }
             // inject plan name
             let planName = document.getElementById('plan-title').textContent;
