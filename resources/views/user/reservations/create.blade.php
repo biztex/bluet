@@ -36,12 +36,16 @@
     </ul>
     </div>
     @endif
-    <form action="{{ url('reservations/store') }}" method="post">
+    <form id="reservation-form" action="{{ url('reservations/store') }}" method="post">
     @csrf
+    <input type="hidden" id="lang" name="lang" value="ja" />
+    <input type="hidden" id="plan_name" name="plan_name" value="" />
+    <input type="hidden" id="activity_name" name="activity_name" value="" />
+
     <div class="reservation">
         @if (request('is_request') == 0)
         <span class="page-title">予約内容の入力</span><small>-　 株式会社ブルーツーリズム北海道</small>
-        @else 
+        @else
         <span class="page-title">リクエスト予約内容の入力</span><small>-　 株式会社ブルーツーリズム北海道</small>
         <div class="notice-request"><span class="text-red">リクエスト予約は即時予約ではありません。必ず実施会社と予約のやり取りをしてください。</span></div>
         @endif
@@ -50,11 +54,11 @@
         <div class="plan-image">
             <img src="/public/uploads/{{ $plan->file_path1 }}" />
             <div>
-                <p class="plan-title">{{ $plan->name }}</p>
+                <p id="plan-title" class="plan-title">{{ $plan->name }}</p>
                 <p><strong>実施会社</strong>：株式会社ブルーツーリズム北海道</p>
                 <p><strong>実施日時</strong></p>
 @foreach($plan->activities as $activity)
-  @if ($activity->is_overday == 1 && $activity->days_after != 00) 
+  @if ($activity->is_overday == 1 && $activity->days_after != 00)
 <small>・{{ date('Y年m月d日', strtotime($date)) }} {{ $activity->start_hour }}:{{ $activity->start_minute }} 〜 {{ date('Y年m月d日', strtotime($date . " " . substr($activity->days_after, 1, 2) . " day")) }} {{ $activity->end_hour }}:{{ $activity->end_minute }}</small><br />
   @else
 <small>・{{ date('Y年m月d日', strtotime($date)) }} {{ $activity->start_hour }}:{{ $activity->start_minute }} 〜 {{ $activity->end_hour }}:{{ $activity->end_minute }}</small><br />
@@ -63,17 +67,17 @@
             </div>
         </div>
         <p class="mid-title">予約数</p>
-        <div class="content"> 
+        <div class="content">
             <table>
                 <tr>
                   <th>料金 <span class="text-red">※</span></th><td><hr />@php
 foreach ($plan->prices as $i => $price) {
 echo '<p>';
     if ($price->week_flag == 0) {
-       echo $price->price_types->name . " / " . number_format($price->price) . " 円"; 
+       echo $price->price_types->name . " / " . number_format($price->price) . " 円";
     }
     if ($price->week_flag == 1) {
-       echo $price->price_types->name . " / " . number_format($price->{$weekday}) . " 円"; 
+       echo $price->price_types->name . " / " . number_format($price->{$weekday}) . " 円";
     }
     echo '<span class="number-text"> 人</span><input type="text" name="type' . $price->type . '_number" class="number" min="0" max="999" value="0"><hr /></p>';
 }
@@ -83,10 +87,10 @@ echo '<p>';
             </table>
         </div>
         <p class="mid-title">時間選択</p>
-        <div class="content"> 
+        <div class="content">
             <table>
                 <tr>
-                  <th>参加時間帯 <span class="text-red">※</span></th><td><select name="selected_activity" required><option value selected>選択してください</option>@foreach($plan->activities as $activity) @if ($activity->is_overday == 1 && $activity->days_after != 00)
+                  <th>参加時間帯 <span class="text-red">※</span></th><td><select id="selected_activity" name="selected_activity" required><option value selected>選択してください</option>@foreach($plan->activities as $activity) @if ($activity->is_overday == 1 && $activity->days_after != 00)
 <option value="{{ date('Y年m月d日', strtotime($date)) }} {{ $activity->start_hour }}:{{ $activity->start_minute }} 〜 {{ date('Y年m月d日', strtotime($date . " " . substr($activity->days_after, 1, 2) . " day")) }} {{ $activity->end_hour }}:{{ $activity->end_minute }}　（{{ $activity->name }})">{{ date('Y年m月d日', strtotime($date)) }} {{ $activity->start_hour }}:{{ $activity->start_minute }} 〜 {{ date('Y年m月d日', strtotime($date . " " . substr($activity->days_after, 1, 2) . " day")) }} {{ $activity->end_hour }}:{{ $activity->end_minute }}　（{{ $activity->name }})</option>
 @else
 <option value="{{ $activity->start_hour }}:{{ $activity->start_minute }}〜{{ $activity->end_hour }}:{{ $activity->end_minute }} （{{ $activity->name }})">{{ $activity->start_hour }}:{{ $activity->start_minute }}〜{{ $activity->end_hour }}:{{ $activity->end_minute }} （{{ $activity->name }}）</option>
@@ -96,7 +100,7 @@ echo '<p>';
             </table>
         </div>
         <p class="mid-title">予約代表者情報</p>
-        <div class="content"> 
+        <div class="content">
             <table>
                 <tr>
                   <th>予約代表者氏名 <span class="text-red">※</span></th><td>姓　<input type="text" name="name_last" value="{{ old('name_last') }}" required>　名　<input type="text" name="name_first" value="{{ old('name_first') }}" required></td>
@@ -182,7 +186,7 @@ echo '<p>';
         </div>
         @if ($plan->question_flag == 1)
         <p class="mid-title">質問事項</p>
-        <div class="content"> 
+        <div class="content">
             <table>
                 <tr>
                   <th>質問事項 @if ($plan->answer_flag == 1) <span class="text-red">※</span> @endif</th><td>{{ $plan->question_content }}<br /><textarea rows="5" name="answer" class="answer" @if ($plan->answer_flag == 1){{ 'required' }}@endif >{{ old('answer') }}</textarea></td>
@@ -192,7 +196,7 @@ echo '<p>';
         @endif
         @if (request('is_request') == 0)
         <p class="mid-title">料金決済</p>
-        <div class="content"> 
+        <div class="content">
             <table>
                 <tr>
                   <th>お支払方法 <span class="text-red">※</span></th>
@@ -260,7 +264,7 @@ echo '<p>';
             </tbody>
         </table>
         <p class="mid-title">キャンセル規定</p>
-        <div class="content"> 
+        <div class="content">
             <table>
                 <tr>
                   <th>キャンセル規定</th>
@@ -280,7 +284,7 @@ echo '<p>';
             <button type="submit">リクエスト予約する</button><br /><small class="text-red">※リクエスト予約後、実施会社からの連絡を必ず確認してください</small>
         </div>
         @endif
-        
+
     </div>
     </form>
 </div>
@@ -323,7 +327,7 @@ echo '<p>';
 .confirm button:hover {
     opacity: 0.7;
 }
-    
+
 .answer {
     width: 99%;
     margin: 10px 0 0 0;
@@ -353,7 +357,7 @@ input.is-member {
     background-color: #ececec;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
-} 
+}
 .content tr:last-child th,
 .content tr:last-child td {
     border-bottom: 0px;
@@ -375,7 +379,7 @@ input.is-member {
     background-color: #ececec;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
-} 
+}
 .content-activity tr:last-child th,
 .content-activity tr:last-child td {
     border-bottom: 0px;
@@ -552,6 +556,39 @@ $('input[name="area"]').change(function() {
         $('input[name="tel2"]').attr('pattern', '\\+\\d{1,5}-?\\d{2,4}-?\\d{2,4}-\\d{3,4}');
         $('input[name="tel2"]').attr('placeholder', '+81-90-0000-0000');
     }
+});
+
+function readCookie(name) {
+    var c = document.cookie.split('; '),
+    cookies = {}, i, C;
+
+    for (i = c.length - 1; i >= 0; i--) {
+        C = c[i].split('=');
+        cookies[C[0]] = C[1];
+     }
+
+     return cookies[name];
+}
+
+document.getElementById('reservation-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // inject lang
+    if (readCookie('googtrans')) {
+        document.getElementById('lang').value = readCookie('googtrans').substring(4).replace('-', '_');
+    }
+
+    // inject plan name
+    let planName = document.getElementById('plan-title').textContent;
+    document.getElementById('plan_name').value = planName;
+
+    // inject activity name
+    let activityElement = document.getElementById('selected_activity');
+    let activityValue = activityElement.value;
+    let activityName = activityElement.options[activityElement.selectedIndex].text;
+    document.getElementById('activity_name').value = activityName;
+
+    this.submit();
 });
 </script>
 </html>

@@ -1,5 +1,18 @@
 @extends('layouts.parents')
 @section('title', 'ブルーツーリズム北海道 - コンビニ決済')
+
+@section('translation')
+<div id="glang">
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'ja', includedLanguages: 'en,ja,ko,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
@@ -10,7 +23,7 @@
             <ul class="list-group mb-3">
                 <li class="list-group-item d-flex justify-content-between">
                     <div>
-                        <h6 class="my-0"><strong>プラン名：{{ $reservation->plan->name }}</strong></h6>
+                        <h6 class="my-0"><strong>プラン名：<span id="plan-title">{{ $reservation->plan->name }}</span></strong></h6>
                     </div>
                 </li>
 @php
@@ -36,11 +49,11 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
 }else{
     $Number_of_reservations = json_decode($reservation->Number_of_reservations);
     foreach($reservation->plan->prices as $i => $price) {
-        if(array_key_exists(sprintf('type%d_number', $price->price_types->number), $Number_of_reservations)){
+        if(array_key_exists(sprintf('type%d_number', $price->price_types->number), json_decode($reservation->Number_of_reservations, true))){
             echo '<li class="list-group-item d-flex justify-content-between">';
             echo '<div>';
             echo '<h6 class="my-0">';
-            
+
             if ($price->week_flag == 0) {
                 echo $price->price_types->name . " / &yen;" . number_format($price->price) . " × " . $Number_of_reservations->{'type'.$price->price_types->number.'_number'};
                 echo '</h6>';
@@ -83,8 +96,14 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
 -->
             </div>
             <hr class="mb-4">
-            <form method="post" action="{{ url('/cvs') }}" class="needs-validation" novalidate>
+            <form id="reservation-form" method="post" action="{{ url('/cvs') }}" class="needs-validation" novalidate>
                 @csrf
+
+                <input type="hidden" id="lang" name="lang" value="ja" />
+                <input type="hidden" id="plan_name" name="plan_name" value="" />
+                <input type="hidden" id="activity_name" name="activity_name" value="" />
+                <p id="selected_activity" class="d-none">{{ $reservation->activity_date }}</p>
+
                 <div class="mb-3">
                     <label for="orderId">予約番号</label>
                     <div class="row">
@@ -158,4 +177,37 @@ if ($reservation->created_at < date('Y-m-d H:i:s',strtotime('2022-06-29 22:00:00
         </div>
 
     </div>
+
+    <script>
+        function readCookie(name) {
+            var c = document.cookie.split('; '),
+            cookies = {}, i, C;
+
+            for (i = c.length - 1; i >= 0; i--) {
+                C = c[i].split('=');
+                cookies[C[0]] = C[1];
+            }
+
+            return cookies[name];
+        }
+
+        document.getElementById('reservation-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // inject lang
+            if (readCookie('googtrans')) {
+                document.getElementById('lang').value = readCookie('googtrans').substring(4).replace('-', '_');
+            }
+
+            // inject plan name
+            let planName = document.getElementById('plan-title').textContent;
+            document.getElementById('plan_name').value = planName;
+
+            // inject activity name
+            let activityName = document.getElementById('selected_activity').textContent;
+            document.getElementById('activity_name').value = activityName;
+
+            this.submit();
+        });
+    </script>
 @endsection

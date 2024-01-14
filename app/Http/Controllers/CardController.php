@@ -34,6 +34,11 @@ class CardController extends Controller
 
     public function cardAuthorize(Request $request)
     {
+        // Set locale to user's language
+        if ($request->has('lang')) {
+            app()->setLocale($request->lang);
+        }
+
         $logger = Log::channel('tgmdk')->getLogger();
         if ($logger instanceof LoggerInterface) {
             TGMDK_Logger::setLogger($logger);
@@ -89,9 +94,9 @@ class CardController extends Controller
                 }
                 Mail::send(['text' => 'user.reservations.email'], [
                     "number" => $reservation->number,
-                    "plan" => $reservation->plan->name,
+                    "plan" => $request->plan_name,
                     "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                    "activity" => $reservation->activity_date,
+                    "activity" => $request->activity_name,
                     "name_last" => $reservation->user->name_last,
                     "name_first" => $reservation->user->name_first,
                     "email" => $reservation->user->email,
@@ -129,7 +134,7 @@ class CardController extends Controller
                 if ($stock) {
                     if ($reservation->plan->res_limit_flag == 0) {
                         // 予約人数をカウント
-                        $count_member = 0; 
+                        $count_member = 0;
                         for ($i = 0; $i <= 20 ; $i++) {
                             $count = $reservation->{'type'. $i . '_number'};
                             if ($count > 0) {
@@ -142,7 +147,7 @@ class CardController extends Controller
                             $Number_of_reservations = json_decode($reservation->Number_of_reservations);
                             $count_member = 0;
                             for($i=0;$i<=100;$i++){
-                                if(array_key_exists(sprintf('type%d_number', $i),$Number_of_reservations)){
+                                if(array_key_exists(sprintf('type%d_number', $i),json_decode($reservation->Number_of_reservations, true))){
                                     if($Number_of_reservations->{sprintf('type%d_number', $i)} > 0 ){
                                         $count_member += $Number_of_reservations->{sprintf('type%d_number', $i)};
                                     }
