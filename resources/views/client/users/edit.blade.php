@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label text-md-right">{{ __('生年月日') }}</label>
+                            <label class="col-md-2 col-form-label text-md-right"><span class="badge badge-danger">必須</span>{{ __('生年月日') }}</label>
                             <div class="col-md-3">
                                 <input id="" type="date" class="form-control" name="birth_day" value="{{ old('birth_day',$users->birth_day) }}">
                             </div>

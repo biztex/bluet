@@ -154,7 +154,7 @@ class ClientsController extends Controller
              'email2' => ['nullable', 'string', 'max:255'],
              'customer_number' => ['nullable', 'string', 'max:255'],
              'gender' => ['nullable', 'numeric'],
-             'birth_day' => ['nullable', 'date'],
+             'birth_day' => ['required', 'date'],
              'postal_code' => ['required', 'string', 'max:8'],
              'prefecture' => ['required', 'string', 'max:5'],
              'address' => ['required', 'string', 'max:500'],
