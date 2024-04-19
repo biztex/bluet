@@ -6,6 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../public/css/template.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/template.css"> -->
     <title>アクティビティ一覧 | ブルーツーリズム北海道 </title>
 </head>
 <body>

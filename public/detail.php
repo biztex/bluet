@@ -5,8 +5,10 @@ if ($_GET["plan_id"]) {
 }
 if ($_GET["preview"] == 1) {
     $url = "http://localhost/api/plan/json/" . $plan_id . '/1';
+    // $url = "https://blue-tourism-hokkaido.website/api/plan/json/" . $plan_id . '/1';
 } else {
     $url = "http://localhost/api/plan/json/" . $plan_id;
+    // $url = "http://blue-tourism-hokkaido.website/api/plan/json/" . $plan_id;
 }
 $array = file_get_contents($url);
 $plan = json_decode($array,true);
@@ -33,8 +35,10 @@ $next_y = $next_m_date->format('Y');
 $next_m = $next_m_date->format('m');
 
 $url_stocks = "http://localhost/api/stocks/json/" . $current_y . '/' . $current_m . '/' . $plan_id;
+// $url_stocks = "http://blue-tourism-hokkaido.website/api/stocks/json/" . $current_y . '/' . $current_m . '/' . $plan_id;
 $json_stocks = file_get_contents($url_stocks);
 $stocks = json_decode($json_stocks,true);
+// $url_stocks_next = "http://blue-tourism-hokkaido.website/api/stocks/json/" . $next_y . '/' . $next_m . '/' . $plan_id;
 $url_stocks_next = "http://localhost/api/stocks/json/" . $next_y . '/' . $next_m . '/' . $plan_id;
 $json_stocks_next = file_get_contents($url_stocks_next);
 $stocks_next = json_decode($json_stocks_next,true);

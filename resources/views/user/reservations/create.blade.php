@@ -171,7 +171,25 @@ echo '<p>';
                   <th>電話番号 <span class="text-red">※</span></th><td><input type="text" name="tel" pattern="\d{2,4}-?\d{2,4}-\d{3,4}" value="{{ old('tel') }}" required placeholder="ハイフンありで入力"></td>
                 </tr>
                 <tr>
-                  <th>生年月日 <span class="text-red">※</span></th><td><select name="birth_year">@for ($i = (date('Y') - 150) ; $i <= (date('Y')) ; $i++) <option value="{{ $i }}" @if ($i == (date('Y'))) selected @endif>{{ $i }}</option> @endfor</select> 年　<select name="birth_month">@for ($i = 1 ; $i <= 12 ; $i++) <option value="{{ $i }}" @if ($i == 1) selected @endif >{{ $i }}</option> @endfor</select> 月　<select name="birth_day">@for ($i = 1 ; $i <= 31 ; $i++) <option value="{{ $i }}"  @if ($i == 1) selected @endif >{{ $i }}</option> @endfor</select> 日</td>
+                    <th>生年月日 <span class="text-red">※</span></th>
+                    <td>
+                        <select name="birth_year">
+                            <option value>選択してください</option>
+                        @for ($i = (date('Y') - 150) ; $i <= (date('Y')) ; $i++) 
+                            <option value="{{ $i }}" >{{ $i }}</option> 
+                        @endfor
+                        </select> 年　<select name="birth_month">
+                        <option value>選択してください</option>
+                        @for ($i = 1 ; $i <= 12 ; $i++) 
+                            <option value="{{ $i }}" >{{ $i }}</option> 
+                        @endfor
+                        </select> 月　<select name="birth_day">
+                        <option value>選択してください</option>
+                        @for ($i = 1 ; $i <= 31 ; $i++) 
+                            <option value="{{ $i }}" >{{ $i }}</option> 
+                        @endfor
+                        </select> 日
+                    </td>
                 </tr>
                 <tr>
                   <th>当日緊急連絡先 <span class="text-red">※</span></th><td><input type="text" name="tel2" pattern="\d{2,4}-\d{2,4}-\d{3,4}" value="{{ old('tel2') }}" required placeholder="ハイフンありで入力"> <small>※必ずつながる電話番号をご入力ください</small></td>
