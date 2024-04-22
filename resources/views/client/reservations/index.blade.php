@@ -53,7 +53,7 @@ new gridjs.Grid ({
       width: '0px',
       sort: false,
       formatter: (_, row) => gridjs.html(`
-        <div class="text-center">
+        <div class="row">
           <input id="row-data" type="checkbox" name="row-data" value="${row.cells[1].data}">
         </div>
       `),
