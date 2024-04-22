@@ -88,7 +88,7 @@ new gridjs.Grid ({
   server: {
     url: '/client/reservations/json',
     then: data => data.map(data =>
-      ['', data.id, data.order_id, data.status, data.user.name_last + ' ' + data.user.name_first, data.plan.name.slice(0, 10), data.created_at.slice(0, 10), data.fixed_datetime.slice(0, 10), displayPaymentMethod(data.payment_method)]
+      ['', data.id, data.order_id, data.status, data.user.name_last + ' ' + data.user.name_first, data.plan.name, data.created_at.slice(0, 10), data.fixed_datetime.slice(0, 10), displayPaymentMethod(data.payment_method)]
     )
   }
 }).render(document.getElementById('result'));
