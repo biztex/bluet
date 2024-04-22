@@ -70,7 +70,20 @@ new gridjs.Grid ({
         </div>
       `)
     },
-    '予約番号','予約状況',' 名前','プラン名','予約受付日時', '予約確定日時', '決済方法',
+    '予約番号','予約状況',' 名前',
+    {
+      name: 'プラン名',
+      minWidth: '411px',
+      sort: {
+        enabled: true
+      },
+      formatter: (_, row) => gridjs.html(`
+      <div class="text-center">
+      ${row.cells[5].data}
+      </div>
+      `)
+    },
+    '予約受付日時', '予約確定日時', '決済方法',
     {
       name: 'データ操作',
       sort: false,
