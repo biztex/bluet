@@ -78,7 +78,7 @@ new gridjs.Grid ({
         enabled: true
       },
       formatter: (_, row) => gridjs.html(`
-      <div class="text-center">
+      <div class="row">
       ${row.cells[5].data}
       </div>
       `)
