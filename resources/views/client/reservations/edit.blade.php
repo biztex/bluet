@@ -96,9 +96,72 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('予約者') }}</label>
-                            <div class="col-md-6">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('予約者ID') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->id }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('予約者名前') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->name_last }} {{ $reservations->user->name_first }}" disabled>
+                            </div>
+                            <!-- <div class="col-md-6">
                                 <a target="_blank" class="font-weight-bold" style="line-height: 2.4;" href="/client/users/edit/{{ $reservations->user->id }}">{{ $reservations->user->name_last }} {{ $reservations->user->name_first }} <small>（別ページで開く）</small></i></a>
+                            </div> -->
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('電話番号') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->tel }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('メールアドレス') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->email }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('お客様番号') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->customer_number }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('性別') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->gender }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('生年月日') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->birth_day }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('郵便番号') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->postal_code }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('都道府県') }}</label>
+                            <div class="col-md-3">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->prefecture }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('住所') }}</label>
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->address }}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('メモ（社内用）') }}</label>
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control" name="" value="{{ $reservations->user->memo }}" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
