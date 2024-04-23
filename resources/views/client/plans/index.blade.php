@@ -103,7 +103,7 @@ new gridjs.Grid ({
   server: {
     url: '/client/plans/json',
     then: data => data.map(data => 
-      [ '', data.id, data.sort == null ? '' : data.sort, data.name.slice(0, 15),data.tour_code, data.start_day, data.end_day, data.is_listed]
+      [ '', data.id, data.sort == null ? '' : data.sort, data.name.slice(0, 15),data.tour_code, data.start_day, data.end_day, displayIsListed(data.is_listed)]
     )
   } 
 }).render(document.getElementById('result'));
