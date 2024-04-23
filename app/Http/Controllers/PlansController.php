@@ -45,6 +45,7 @@ class PlansController extends Controller
             'kind' => ['required'],
             'is_listed' => ['required'],
             'name' => ['required', 'string', 'max:100'],
+            'tour_code' => ['required', 'string', 'max:6'],
             'catchphrase' => ['required', 'string', 'max:300'],
             'description' => ['required', 'string', 'max:1200'],
             'start_day' => ['required', 'date'],
@@ -415,6 +416,7 @@ class PlansController extends Controller
 	$plans->prepay = $request->prepay;
 	$plans->cvs = $request->cvs;
 	$plans->card = $request->card;
+	$plans->tour_code = $request->tour_code;
         for ($i = 0; $i < $image_count ; $i++) {
             $plans->{'file_path' . ($i + 1)} = ${'fileName' . ($i + 1)};
         }

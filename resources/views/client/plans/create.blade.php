@@ -66,6 +66,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-md-right"><span class="badge badge-danger">必須</span> {{ __('ツアーコード') }}</label>
+                            <div class="col-md-3">
+                                <input id="" type="text" class="form-control" name="tour_code" value="{{ old('tour_code') }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label text-md-right"><span class="badge badge-danger">必須</span> キャッチコピー</label>
                             <div class="col-md-8">
                                 <textarea id="" type="textarea" class="form-control" name="catchphrase" rows="5" placeholder="※最大300文字まで">{{ old('catchphrase') }}</textarea>

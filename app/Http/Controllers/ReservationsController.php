@@ -209,7 +209,8 @@ class ReservationsController extends Controller
         $count = Reservation::whereDate('created_at', Carbon::today())->count();
         $date = date("Ymd");
         $zeropadding = sprintf('%05d', $count);
-        $reservation_number = 'BH' . $date . $zeropadding;
+        $tour_code = $plan->tour_code;
+        $reservation_number = $tour_code. '_BH' . $date . $zeropadding;
         // 予約追加
         $reservation = new Reservation;
         $reservation->plan_id = $request->plan_id;
