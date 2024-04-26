@@ -84,7 +84,19 @@ new gridjs.Grid ({
         <input class="input-sort-ajax" type="number" min="1" max="999" name="input-sort-ajax" style="display:none;" data-id="${row.cells[1].data}" value="${row.cells[2].data}" />
       `)
     },
-    'プラン名','ツアーコード','開始日','終了日','ステータス',
+    {
+      name: 'プラン名',
+      sort: {
+        enabled: true
+      },
+      width: '505px',
+      formatter: (_, row) => gridjs.html(`
+        <div class="row">
+          ${row.cells[3].data}
+        </div>
+      `)
+    },
+    'ツアーコード','開始日','終了日','ステータス',
     { 
       name: 'データ操作',
       sort: false,
@@ -103,7 +115,7 @@ new gridjs.Grid ({
   server: {
     url: '/client/plans/json',
     then: data => data.map(data => 
-      [ '', data.id, data.sort == null ? '' : data.sort, data.name.slice(0, 15),data.tour_code, data.start_day, data.end_day, displayIsListed(data.is_listed)]
+      [ '', data.id, data.sort == null ? '' : data.sort, data.name,data.tour_code, data.start_day, data.end_day, displayIsListed(data.is_listed)]
     )
   } 
 }).render(document.getElementById('result'));
