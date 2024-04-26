@@ -1091,7 +1091,7 @@ class ReservationsController extends Controller
         $reservation->type19_number = $request->type19_number;
         $reservation->type20_number = $request->type20_number;
         $reservation->memo = $request->memo;
-        if ($count_old_member != $count_requested_member) {
+        if ($count_requested_member != 0) {
             // 合計金額セット
             $amount = 0;
             $dt = new Carbon($request->date);
