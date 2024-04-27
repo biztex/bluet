@@ -70,7 +70,16 @@ new gridjs.Grid ({
         </div>
       `)
     },
-    '予約番号','予約状況',' 名前',
+    {
+      name: '予約番号',
+      sort: {
+        enabled: true
+      },
+      formatter: (_, row) => gridjs.html(`
+      <a href="/client/reservations/edit/${row.cells[1].data}" class="row" style="color: initial;">${row.cells[2].data}</a>
+      `)
+    }
+    ,'予約状況',' 名前',
     {
       name: 'プラン名',
       minWidth: '411px',
