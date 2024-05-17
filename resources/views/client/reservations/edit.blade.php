@@ -247,7 +247,10 @@ $Number_req[$loop->index + 1] = $type_number;
 @else
 @php $Number_of_reservations = json_decode($reservations->Number_of_reservations);@endphp
 @if (!array_key_exists(sprintf('type%d_number', $price->type), $Number_of_reservations))
-@php $Number_of_reservations->{'type' . $price->type . '_number'} = 0;@endphp
+    @php 
+        $Number_of_reservations = (object) $Number_of_reservations;
+        $Number_of_reservations->{'type' . $price->type . '_number'} = 0;
+    @endphp
 @endif
 <td style="text-align: right; padding-left: 50px;"><div class="row"><input id="per-number{{ ($loop->index + 1) }}" class="number-input" name="type{{$price->type}}_number" value="@php $i = $price->type;echo $Number_of_reservations->{'type' . $i . '_number'};@endphp"> <span style="line-height: 1.8;" class="col-md-1"> 名</span></div></td>
 <input type="hidden" class="col-md-6 text-right" value="@php $i = $price->type;echo $Number_of_reservations->{'type' . $i . '_number'};@endphp">

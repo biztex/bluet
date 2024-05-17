@@ -76,7 +76,7 @@ new gridjs.Grid ({
         enabled: true
       },
       formatter: (_, row) => gridjs.html(`
-      <a href="/client/reservations/edit/${row.cells[1].data}" class="row" style="color: initial;">${row.cells[2].data}</a>
+      <a href="/client/reservations/edit/${row.cells[1].data}" class="row">${row.cells[2].data}</a>
       `)
     }
     ,'予約状況',' 名前',
