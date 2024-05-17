@@ -91,7 +91,7 @@ new gridjs.Grid ({
       },
       width: '505px',
       formatter: (_, row) => gridjs.html(`
-        <a href="/client/plans/edit/${row.cells[1].data}" class="row" style="color: initial;">${row.cells[3].data}</a>
+        <a href="/client/plans/edit/${row.cells[1].data}" class="row">${row.cells[3].data}</a>
       `)
     },
     'ツアーコード','開始日','終了日','ステータス',
