@@ -1,5 +1,9 @@
 {{ $name_last }} {{ $name_first }}　様
 
+This message is for booking confirmation presented by blue tourism Hokkaido co.,Ltd.
+
+For foreigners : We will send you in detail in English later.
+
 この度はブルーツーリズム北海道からのご予約、誠にありがとうございました。
 
 以下の内容にて予約を承っておりますのでご確認ください。

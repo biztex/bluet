@@ -448,9 +448,9 @@ class ReservationsController extends Controller
                 // 予約者へメール通知
                 Mail::send(['text' => 'user.reservations.prepayemail'], [
                     "number" => $reservation->order_id,
-                    "plan" => $request->plan_name,
+                    "plan" => $reservation->plan->name,
                     "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                    "activity" => $request->activity_name,
+                    "activity" => $reservation->activity_date,
                     "name_last" => $request->name_last,
                     "name_first" => $request->name_first,
                     "email" => $request->email,
@@ -512,9 +512,9 @@ class ReservationsController extends Controller
                 // 予約者へメール通知
                 Mail::send(['text' => 'user.reservations.spotemail'], [
                     "number" => $reservation->order_id,
-                    "plan" => $request->plan_name,
+                    "plan" => $reservation->plan->name,
                     "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                    "activity" => $request->activity_name,
+                    "activity" => $reservation->activity_date,
                     "name_last" => $request->name_last,
                     "name_first" => $request->name_first,
                     "email" => $request->email,
@@ -576,9 +576,9 @@ class ReservationsController extends Controller
             // リクエスト予約者へメール通知
             Mail::send(['text' => 'user.reservations.reqemail'], [
                 "number" => $reservation->order_id,
-                "plan" => $request->plan_name,
+                "plan" => $reservation->plan->name,
                 "date" => date('Y年m月d日', strtotime($request->date)),
-                "activity" => $request->activity_name,
+                "activity" => $reservation->activity_date,
                 "name_last" => $request->name_last,
                 "name_first" => $request->name_first,
                 "email" => $request->email,
@@ -675,6 +675,7 @@ class ReservationsController extends Controller
             }
         }
         $reservation = Reservation::find($id);
+        dd($reservation->activity_date);
         if ($reservation->status != 'リクエスト予約') {
             throw ValidationException::withMessages(['status_error' => '予約ステータスをリクエスト予約に変更後、再度送信をお試しください']);
         }
@@ -893,9 +894,9 @@ class ReservationsController extends Controller
         if ($pm == 0) { // 現地前払い
             Mail::send(['text' => 'user.reservations.spotemail'], [
                 "number" => $reservation->order_id,
-                "plan" => $request->plan_name,
+                "plan" => $reservation->plan->name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $request->activity_name,
+                "activity" => $reservation->activity_date,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -918,9 +919,9 @@ class ReservationsController extends Controller
         } else if ($pm == 1) { // 事前払い
             Mail::send(['text' => 'user.reservations.prepayemail'], [
                 "number" => $reservation->order_id,
-                "plan" => $request->plan_name,
+                "plan" => $reservation->plan->name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $request->activity_name,
+                "activity" => $reservation->activity_date,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -944,9 +945,9 @@ class ReservationsController extends Controller
             Mail::send(['text' => 'user.reservations.cvsemail'], [
                 "url_cvs" => 'https://blue-tourism-hokkaido.website/pay?prm=' . encrypt($param_cvs),
                 "number" => $reservation->order_id,
-                "plan" => $request->plan_name,
+                "plan" => $reservation->plan->name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $request->activity_name,
+                "activity" => $reservation->activity_date,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -968,9 +969,9 @@ class ReservationsController extends Controller
             Mail::send(['text' => 'user.reservations.cardemail'], [
                 "url_card" => 'https://blue-tourism-hokkaido.website/pay?prm=' . encrypt($param_card),
                 "number" => $reservation->order_id,
-                "plan" => $request->plan_name,
+                "plan" => $reservation->plan->name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $request->activity_name,
+                "activity" => $reservation->activity_date,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
@@ -2026,9 +2027,9 @@ class ReservationsController extends Controller
             // 予約者へメール通知
             Mail::send(['text' => 'user.reservations.email'], [
                 "number" => $reservation->order_id,
-                "plan" => $request->plan_name,
+                "plan" => $reservation->plan->name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
-                "activity" => $request->activity_name,
+                "activity" => $reservation->activity_date,
                 "name_last" => $reservation->user->name_last,
                 "name_first" => $reservation->user->name_first,
                 "email" => $reservation->user->email,
