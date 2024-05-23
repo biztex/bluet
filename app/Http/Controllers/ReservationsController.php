@@ -942,7 +942,7 @@ class ReservationsController extends Controller
             });
         } else if ($pm == 2) {
             Mail::send(['text' => 'user.reservations.cvsemail'], [
-                "url_cvs" => 'https://blue.zenryo-ec.info/pay?prm=' . encrypt($param_cvs),
+                "url_cvs" => 'https://blue-tourism-hokkaido.website/pay?prm=' . encrypt($param_cvs),
                 "number" => $reservation->order_id,
                 "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),
@@ -966,7 +966,7 @@ class ReservationsController extends Controller
             });
         } else if ($pm == 3) {
             Mail::send(['text' => 'user.reservations.cardemail'], [
-                "url_card" => 'https://blue.zenryo-ec.info/pay?prm=' . encrypt($param_card),
+                "url_card" => 'https://blue-tourism-hokkaido.website/pay?prm=' . encrypt($param_card),
                 "number" => $reservation->order_id,
                 "plan" => $request->plan_name,
                 "date" => date('Y年m月d日', strtotime($reservation->fixed_datetime)),

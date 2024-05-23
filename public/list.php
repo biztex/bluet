@@ -5,8 +5,8 @@
 <html lang="ja">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../public/css/template.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/template.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../public/css/template.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/template.css">
     <title>アクティビティ一覧 | ブルーツーリズム北海道 </title>
 </head>
 <body>
@@ -23,40 +23,40 @@
     <div class="flex-container-plans">
     <?php
     // アクティビティプラン(0)
-    // $url = "http://blue-tourism-hokkaido.website/api/plans/json/0";
-    // $json = file_get_contents($url);
-    // $plans0 = json_decode($json,true);
-    $plans0 = ndCurlExecJson('api/plans/json/0');
+    $url = "http://blue-tourism-hokkaido.website/api/plans/json/0";
+    $json = file_get_contents($url);
+    $plans0 = json_decode($json,true);
+    // $plans0 = ndCurlExecJson('api/plans/json/0');
 
     // 日帰りツアー(1)
-    // $url = "http://blue-tourism-hokkaido.website/api/plans/json/1";
-    // $json = file_get_contents($url);
-    // $plans1 = json_decode($json,true);
-    $plans1 = ndCurlExecJson('api/plans/json/1');
+    $url = "http://blue-tourism-hokkaido.website/api/plans/json/1";
+    $json = file_get_contents($url);
+    $plans1 = json_decode($json,true);
+    // $plans1 = ndCurlExecJson('api/plans/json/1');
 
     // 宿泊付きツアー(2)
-    // $url = "http://blue-tourism-hokkaido.website/api/plans/json/2";
-    // $json = file_get_contents($url);
-    // $plans2 = json_decode($json,true);
-    $plans2 = ndCurlExecJson('api/plans/json/2');
+    $url = "http://blue-tourism-hokkaido.website/api/plans/json/2";
+    $json = file_get_contents($url);
+    $plans2 = json_decode($json,true);
+    // $plans2 = ndCurlExecJson('api/plans/json/2');
 
     // 宿泊プラン(3)
-    // $url = "http://blue-tourism-hokkaido.website/api/plans/json/3";
-    // $json = file_get_contents($url);
-    // $plans3 = json_decode($json,true);
-    $plans3 = ndCurlExecJson('api/plans/json/3');
+    $url = "http://blue-tourism-hokkaido.website/api/plans/json/3";
+    $json = file_get_contents($url);
+    $plans3 = json_decode($json,true);
+    // $plans3 = ndCurlExecJson('api/plans/json/3');
 
     // カスタマイズツアー(4)
-    // $url = "http://blue-tourism-hokkaido.website/api/plans/json/4";
-    // $json = file_get_contents($url);
-    // $plans4 = json_decode($json,true);
-    $plans4 = ndCurlExecJson('api/plans/json/4');
+    $url = "http://blue-tourism-hokkaido.website/api/plans/json/4";
+    $json = file_get_contents($url);
+    $plans4 = json_decode($json,true);
+    // $plans4 = ndCurlExecJson('api/plans/json/4');
 
     // 貸切交通手配（タクシー・バス）(5)
-    // $url = "http://blue-tourism-hokkaido.website/api/plans/json/5";
-    // $json = file_get_contents($url);
-    // $plans5 = json_decode($json,true);
-    $plans5 = ndCurlExecJson('api/plans/json/5');
+    $url = "http://blue-tourism-hokkaido.website/api/plans/json/5";
+    $json = file_get_contents($url);
+    $plans5 = json_decode($json,true);
+    // $plans5 = ndCurlExecJson('api/plans/json/5');
 
     // 配列結合
     $plans = array_merge($plans0, $plans1, $plans2, $plans3, $plans4, $plans5);
